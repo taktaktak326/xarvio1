@@ -689,6 +689,7 @@ $(document).ready(function($) {
     });
 
 
+
     $('.input--none-number').each(function(){
         $(this).on('keyup',function(){
             if ($(this).val() > Number($(this).attr("max"))) {
