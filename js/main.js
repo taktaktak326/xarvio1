@@ -687,7 +687,9 @@ $(document).ready(function($) {
             textError3.css("display","none");
         }
     });
-
+    
+const dfMessenger = document.querySelector('df-messenger');
+dfMessenger.clearStorage();
 
 
     $('.input--none-number').each(function(){
