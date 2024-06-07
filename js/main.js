@@ -688,8 +688,6 @@ $(document).ready(function($) {
         }
     });
     
-const dfMessenger = document.querySelector('df-messenger');
-dfMessenger.clearStorage();
 
 
     $('.input--none-number').each(function(){
