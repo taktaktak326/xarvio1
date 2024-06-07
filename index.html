@@ -45,7 +45,18 @@
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 
   <!-- End Chat -->
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clearButton = document.getElementById('clear-storage-button');
+            clearButton.addEventListener('click', function() {
+                const dfMessenger = document.querySelector('df-messenger');
+                if (dfMessenger) {
+                    dfMessenger.clearStorage();
+                    alert('Storage cleared!');
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -88,18 +99,18 @@
   ></df-messenger-chat>
 </df-messenger>
 
-<script>
-  // An example of handling events: Navigate to the first suggested URL.
-  document.addEventListener('df-url-suggested', (event) => {
-    if (Array.isArray(event.detail.suggestedUrls) &&
-      event.detail.suggestedUrls.length) {
-      window.location.href = event.detail.suggestedUrls[0];
-  }
-});
+                <!-- Clear Storage Button -->
+                <button id="clear-storage-button">クリアストレージ</button>
 
-
-
-</script>
+                <script>
+                    // An example of handling events: Navigate to the first suggested URL.
+                    document.addEventListener('df-url-suggested', (event) => {
+                        if (Array.isArray(event.detail.suggestedUrls) &&
+                            event.detail.suggestedUrls.length) {
+                            window.location.href = event.detail.suggestedUrls[0];
+                        }
+                    });
+                </script>
   <!-- End Chat body -->
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
                     <span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span>
