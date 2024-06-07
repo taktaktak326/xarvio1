@@ -40,35 +40,49 @@
 
     <link rel="stylesheet" href="public/styles/style.css">
 
-  <!-- Chat -->
-  <link rel="stylesheet" href="public/styles/df-messenger-default.css">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <!-- Chat -->
+    <link rel="stylesheet" href="public/styles/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <!-- End Chat -->
 
-  <!-- End Chat -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {	document.addEventListener('DOMContentLoaded', function() {
-const dfMessenger = document.querySelector('df-messenger');	const clearButton = document.getElementById('clear-storage-button');
-if (dfMessenger) {	clearButton.addEventListener('click', function() {
-dfMessenger.addEventListener('df-messenger-ready', function() {	const dfMessenger = document.querySelector('df-messenger');
-if (dfMessenger) {
-dfMessenger.clearStorage();	dfMessenger.clearStorage();
-});	alert('Storage cleared!');
-}	}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clearButton = document.getElementById('clear-storage-button');
+            clearButton.addEventListener('click', function() {
+                const dfMessenger = document.querySelector('df-messenger');
+                if (dfMessenger) {
+                    dfMessenger.clearStorage();
+                    alert('Storage cleared!');
+                }
             });
-});	});
-</script>
-    
-    
+        });
+    </script>
+
+    <style>
+        #clear-storage-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #clear-storage-button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 
 <body>
-
-
     <header class="c-header">
         <div class="c-header__inner">
-             <a href="/" class="c-header__logo">
-                 <img src="../img/common/logo.svg" alt="">
-             </a>
+            <a href="/" class="c-header__logo">
+                <img src="../img/common/logo.svg" alt="">
+            </a>
         </div>
     </header>
 
@@ -79,31 +93,29 @@ dfMessenger.clearStorage();	dfMessenger.clearStorage();
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
                     AIがあなたの質問に24時間365日、お答えいたします。
                 </div>
-                
 
-  <!-- Chatbody -->
-<df-messenger
-    location="global" 
-    project-id="prj-basf-xarviobot-dev" 
-    agent-id="961269a7-0404-4be1-a4ed-fbc413dc40c5" 
-    language-code="ja" 
-    max-query-length="-1"
-    url-allowlist="*"
-    allow-feedback="all"
->
-  <df-messenger-chat
-      chat-title="チャットで相談" 
-      chat-title-icon ="https://www.xarvio-japan.jp/img/common/xarvio-ogp.png"
-      bot-writing-image ="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
-      placeholder-text="メッセージを入力してください"
-      bot-writing-text="情報を探しています。お待ちください"
-      bot-actor-image="img/Untitled design.png?w=1000&h=1000"
-  ></df-messenger-chat>
-</df-messenger>
+                <!-- Chatbody -->
+                <df-messenger
+                    location="global"
+                    project-id="prj-basf-xarviobot-dev"
+                    agent-id="961269a7-0404-4be1-a4ed-fbc413dc40c5"
+                    language-code="ja"
+                    max-query-length="-1"
+                    url-allowlist="*"
+                    allow-feedback="all"
+                >
+                    <df-messenger-chat
+                        chat-title="チャットで相談"
+                        chat-title-icon="https://www.xarvio-japan.jp/img/common/xarvio-ogp.png"
+                        bot-writing-image="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
+                        placeholder-text="メッセージを入力してください"
+                        bot-writing-text="情報を探しています。お待ちください"
+                        bot-actor-image="img/Untitled design.png?w=1000&h=1000"
+                    ></df-messenger-chat>
+                </df-messenger>
 
-
-                	<!-- Clear Storage Button -->
-<button id="clear-storage-button">クリアストレージ</button>
+                <!-- Clear Storage Button -->
+                <button id="clear-storage-button">クリアストレージ</button>
 
                 <script>
                     // An example of handling events: Navigate to the first suggested URL.
@@ -114,28 +126,18 @@ dfMessenger.clearStorage();	dfMessenger.clearStorage();
                         }
                     });
                 </script>
-  <!-- End Chat body -->
+                <!-- End Chat body -->
+
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
                     <span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span>
                 </div>
-  
             </div>
         </section>
-        
-
-  
     </main>
-    <!--<footer class="c-footer">
-        <div data-includeHTML="../footer.html"></div>
-        <div data-includeHTML="../footer-copyright.html"></div>
-    </footer>-->
-
-    <!--<div class="modal"></div>-->
 
     <!-- JS -->
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"></script>
 </body>
-
 
 </html>
