@@ -45,18 +45,20 @@
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 
   <!-- End Chat -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const clearButton = document.getElementById('clear-storage-button');
-            clearButton.addEventListener('click', function() {
-                const dfMessenger = document.querySelector('df-messenger');
-                if (dfMessenger) {
-                    dfMessenger.clearStorage();
-                    alert('Storage cleared!');
-                }
+<script>
+document.addEventListener('DOMContentLoaded', function() {	document.addEventListener('DOMContentLoaded', function() {
+const dfMessenger = document.querySelector('df-messenger');	const clearButton = document.getElementById('clear-storage-button');
+if (dfMessenger) {	clearButton.addEventListener('click', function() {
+dfMessenger.addEventListener('df-messenger-ready', function() {	const dfMessenger = document.querySelector('df-messenger');
+if (dfMessenger) {
+dfMessenger.clearStorage();	dfMessenger.clearStorage();
+});	alert('Storage cleared!');
+}	}
             });
-        });
-    </script>
+});	});
+</script>
+    
+    
 </head>
 
 <body>
@@ -99,8 +101,9 @@
   ></df-messenger-chat>
 </df-messenger>
 
-                <!-- Clear Storage Button -->
-                <button id="clear-storage-button">クリアストレージ</button>
+
+                	<!-- Clear Storage Button -->
+<button id="clear-storage-button">クリアストレージ</button>
 
                 <script>
                     // An example of handling events: Navigate to the first suggested URL.
