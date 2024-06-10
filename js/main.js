@@ -689,6 +689,8 @@ $(document).ready(function($) {
     });
 
 
+
+    
   class CustomFeedbackElement extends HTMLElement {
   constructor() {
     super();
@@ -696,93 +698,50 @@ $(document).ready(function($) {
   }
 
   connectedCallback() {
-    console.log('CustomFeedbackElement connected'); // デバッグ用
     const wrapper = document.createElement('div');
 
     // Form for additional feedback
     this.form = document.createElement('div');
     this.form.style.display = 'none'; // Initially hidden
 
-    if (this.hasAttribute('allow-feedback') && this.getAttribute('allow-feedback') === 'all') {
-      const reasonLabel = document.createElement('label');
-      reasonLabel.innerText = 'なぜこのレーティングを選びましたか:';
-      this.form.appendChild(reasonLabel);
+    const reasonLabel = document.createElement('label');
+    reasonLabel.innerText = 'なぜこのレーティングを選びましたか:';
+    this.form.appendChild(reasonLabel);
 
-      this.reasonSelect = document.createElement('select');
-      const options = ['間違った回答', 'もっと詳しい情報が欲しい', 'その他'];
-      options.forEach(option => {
-        const opt = document.createElement('option');
-        opt.value = option;
-        opt.innerText = option;
-        this.reasonSelect.appendChild(opt);
-      });
-      this.form.appendChild(this.reasonSelect);
+    this.reasonInput = document.createElement('textarea');
+    this.form.appendChild(this.reasonInput);
 
-      const detailLabel = document.createElement('label');
-      detailLabel.innerText = '詳細:';
-      this.form.appendChild(detailLabel);
+    const expectationLabel = document.createElement('label');
+    expectationLabel.innerText = 'どんな回答を望んでいましたか:';
+    this.form.appendChild(expectationLabel);
 
-      this.detailInput = document.createElement('textarea');
-      this.form.appendChild(this.detailInput);
+    this.expectationInput = document.createElement('textarea');
+    this.form.appendChild(this.expectationInput);
 
-      const submitButton = document.createElement('button');
-      submitButton.innerText = 'Submit';
-      submitButton.addEventListener('click', () => {
-        this._onSubmitClick();
-      });
-      this.form.appendChild(submitButton);
+    const submitButton = document.createElement('button');
+    submitButton.innerText = 'Submit';
+    submitButton.addEventListener('click', () => {
+      this._onSubmitClick();
+    });
+    this.form.appendChild(submitButton);
 
-      wrapper.appendChild(this.form);
-    }
-
-    const style = document.createElement('style');
-    style.textContent = `
-      div {
-        margin: 10px;
-      }
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #ddd;
-      }
-      select, textarea {
-        width: 100%;
-        margin: 5px 0;
-      }
-      textarea {
-        height: 50px;
-      }
-      label {
-        display: block;
-        margin: 5px 0;
-      }
-    `;
-    this.renderRoot.appendChild(style);
+    wrapper.appendChild(this.form);
     this.renderRoot.appendChild(wrapper);
   }
 
-  showForm() {
-    console.log('showForm called'); // デバッグ用
-    if (this.form) {
-      this.form.style.display = 'block'; // Show the form
-    }
+  _onThumbsDownClick() {
+    this.form.style.display = 'block'; // Show the form
   }
 
   _onSubmitClick() {
-    const reason = this.reasonSelect.value;
-    const detail = this.detailInput.value;
-
-    console.log('Reason:', reason); // デバッグ用
-    console.log('Detail:', detail); // デバッグ用
+    const reason = this.reasonInput.value;
+    const expectation = this.expectationInput.value;
 
     const event = new CustomEvent("df-custom-submit-feedback-clicked", {
       detail: JSON.stringify({
         "usefulness": 1, // Assuming Thumbs down means usefulness is low
         "reason": reason,
-        "detail": detail
+        "expectation": expectation
       }),
       bubbles: true,
       composed: true,
@@ -790,8 +749,8 @@ $(document).ready(function($) {
     this.dispatchEvent(event);
 
     // Clear the form and hide it again after submission
-    this.reasonSelect.value = '';
-    this.detailInput.value = '';
+    this.reasonInput.value = '';
+    this.expectationInput.value = '';
     this.form.style.display = 'none';
   }
 }
@@ -800,25 +759,6 @@ $(document).ready(function($) {
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
 })();
 
-// JavaScript to handle the low rating button click
-document.addEventListener('DOMContentLoaded', () => {
-  const thumbsDownButton = document.querySelector('.thumbs-down');
-  if (thumbsDownButton) {
-    console.log('Thumbs down button found'); // デバッグ用
-    thumbsDownButton.addEventListener('click', () => {
-      console.log('Thumbs down button clicked'); // デバッグ用
-      const feedbackElement = document.querySelector('df-external-custom-feedback');
-      if (feedbackElement) {
-        feedbackElement.style.display = 'block';
-        feedbackElement.showForm();
-      } else {
-        console.error('Custom feedback element not found'); // デバッグ用
-      }
-    });
-  } else {
-    console.error('Thumbs down button not found'); // デバッグ用
-  }
-});
 
 
 
