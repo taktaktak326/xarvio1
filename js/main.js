@@ -1,4 +1,3 @@
-
 $(document).ready(function($) {
     $(".main--faq .list-faq .head--qContent").click(function(e) {
         $(this).toggleClass("toggle");
@@ -690,15 +689,6 @@ $(document).ready(function($) {
     });
     
 
-
-
-
-
-
-
-
-
-    
 
     $('.input--none-number').each(function(){
         $(this).on('keyup',function(){
