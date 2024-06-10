@@ -689,13 +689,14 @@ $(document).ready(function($) {
     });
 
 
-    class CustomFeedbackElement extends HTMLElement {
+  class CustomFeedbackElement extends HTMLElement {
   constructor() {
     super();
     this.renderRoot = this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
+    console.log('CustomFeedbackElement connected'); // デバッグ用
     const wrapper = document.createElement('div');
 
     // Form for additional feedback
@@ -764,6 +765,7 @@ $(document).ready(function($) {
   }
 
   showForm() {
+    console.log('showForm called'); // デバッグ用
     if (this.form) {
       this.form.style.display = 'block'; // Show the form
     }
@@ -772,6 +774,9 @@ $(document).ready(function($) {
   _onSubmitClick() {
     const reason = this.reasonSelect.value;
     const detail = this.detailInput.value;
+
+    console.log('Reason:', reason); // デバッグ用
+    console.log('Detail:', detail); // デバッグ用
 
     const event = new CustomEvent("df-custom-submit-feedback-clicked", {
       detail: JSON.stringify({
@@ -796,11 +801,25 @@ $(document).ready(function($) {
 })();
 
 // JavaScript to handle the low rating button click
-document.querySelector('.thumbs-down').addEventListener('click', () => {
-  const feedbackElement = document.querySelector('df-external-custom-feedback');
-  feedbackElement.style.display = 'block';
-  feedbackElement.showForm();
+document.addEventListener('DOMContentLoaded', () => {
+  const thumbsDownButton = document.querySelector('.thumbs-down');
+  if (thumbsDownButton) {
+    console.log('Thumbs down button found'); // デバッグ用
+    thumbsDownButton.addEventListener('click', () => {
+      console.log('Thumbs down button clicked'); // デバッグ用
+      const feedbackElement = document.querySelector('df-external-custom-feedback');
+      if (feedbackElement) {
+        feedbackElement.style.display = 'block';
+        feedbackElement.showForm();
+      } else {
+        console.error('Custom feedback element not found'); // デバッグ用
+      }
+    });
+  } else {
+    console.error('Thumbs down button not found'); // デバッグ用
+  }
 });
+
 
 
 
