@@ -689,6 +689,121 @@ $(document).ready(function($) {
     });
 
 
+    class CustomFeedbackElement extends HTMLElement {
+  constructor() {
+    super();
+    this.renderRoot = this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    const wrapper = document.createElement('div');
+
+    // Thumbs down button
+    const thumbsDownButton = document.createElement('button');
+    thumbsDownButton.innerText = 'Thumbs Down';
+    thumbsDownButton.addEventListener('click', () => {
+      this._onThumbsDownClick();
+    });
+    wrapper.appendChild(thumbsDownButton);
+
+    // Form for additional feedback
+    this.form = document.createElement('div');
+    this.form.style.display = 'none'; // Initially hidden
+
+    if (this.hasAttribute('allow-feedback') && this.getAttribute('allow-feedback') === 'all') {
+      const reasonLabel = document.createElement('label');
+      reasonLabel.innerText = 'なぜこのレーティングを選びましたか:';
+      this.form.appendChild(reasonLabel);
+
+      this.reasonSelect = document.createElement('select');
+      const options = ['間違った回答', 'もっと詳しい情報が欲しい', 'その他'];
+      options.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.innerText = option;
+        this.reasonSelect.appendChild(opt);
+      });
+      this.form.appendChild(this.reasonSelect);
+
+      const detailLabel = document.createElement('label');
+      detailLabel.innerText = '詳細:';
+      this.form.appendChild(detailLabel);
+
+      this.detailInput = document.createElement('textarea');
+      this.form.appendChild(this.detailInput);
+
+      const submitButton = document.createElement('button');
+      submitButton.innerText = 'Submit';
+      submitButton.addEventListener('click', () => {
+        this._onSubmitClick();
+      });
+      this.form.appendChild(submitButton);
+
+      wrapper.appendChild(this.form);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      div {
+        margin: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #ddd;
+      }
+      select, textarea {
+        width: 100%;
+        margin: 5px 0;
+      }
+      textarea {
+        height: 50px;
+      }
+      label {
+        display: block;
+        margin: 5px 0;
+      }
+    `;
+    this.renderRoot.appendChild(style);
+    this.renderRoot.appendChild(wrapper);
+  }
+
+  _onThumbsDownClick() {
+    if (this.form) {
+      this.form.style.display = 'block'; // Show the form
+    }
+  }
+
+  _onSubmitClick() {
+    const reason = this.reasonSelect.value;
+    const detail = this.detailInput.value;
+
+    const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+      detail: JSON.stringify({
+        "usefulness": 1, // Assuming Thumbs down means usefulness is low
+        "reason": reason,
+        "detail": detail
+      }),
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
+
+    // Clear the form and hide it again after submission
+    this.reasonSelect.value = '';
+    this.detailInput.value = '';
+    this.form.style.display = 'none';
+  }
+}
+
+(function() {
+  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
+})();
+
+
 
     $('.input--none-number').each(function(){
         $(this).on('keyup',function(){
