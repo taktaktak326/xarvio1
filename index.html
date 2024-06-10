@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
-    <title>お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー</title>
     <meta name="description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
     <meta property="og:title" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
     <meta property="og:type" content="product">
@@ -18,8 +17,9 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
     <link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
     <link rel="preconnect dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="apple-touch-icon" href="../img/common/apple-touch-icon.png">
-    <link rel="shortcut icon" href="../img/common/favicon.png">
+    <link rel="apple-touch-icon" href="https://www.xarvio-japan.jp/img/common/apple-touch-icon.png">
+    <link rel="shortcut icon" href="https://www.xarvio-japan.jp/img/common/favicon.png">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <!-- Google Tag Manager -->
     <script>
         (function(w, d, s, l, i) {
@@ -38,7 +38,7 @@
     </script>
     <!-- End Google Tag Manager -->
 
-    <link rel="stylesheet" href="public/styles/style.css">
+    <link rel="stylesheet" href="public/styles/style.css?v=1.0">
 
     <!-- Chat -->
     <link rel="stylesheet" href="public/styles/df-messenger-default.css">
@@ -52,69 +52,14 @@
                 const dfMessenger = document.querySelector('df-messenger');
                 if (dfMessenger) {
                     dfMessenger.clearStorage();
-                    alert('Are you sure to clear the conversation?');
+                    alert('会話を削除しますか？');
                 }
             });
         });
     </script>
 
     <style>
-        #clear-storage-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto;
-        }
-
-        #clear-storage-button:hover {
-            background-color: #45a049;
-        }
-
-        .feedback-form {
-            display: none;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 20px auto;
-        }
-
-        .feedback-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        .feedback-form button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin-top: 10px;
-        }
-
-        .feedback-form button:hover {
-            background-color: #45a049;
-        }
-
-        .feedback-form label {
-            font-size: 16px;
-            margin-top: 10px;
-            display: block;
-        }
+        /* Add your custom styles here */
     </style>
 </head>
 
@@ -122,7 +67,7 @@
     <header class="c-header">
         <div class="c-header__inner">
             <a href="/" class="c-header__logo">
-                <img src="../img/common/logo.svg" alt="">
+                <img src="https://www.xarvio-japan.jp/img/common/logo.svg" alt="">
             </a>
         </div>
     </header>
@@ -159,7 +104,7 @@
                     <textarea id="reason" rows="4"></textarea>
                     <label for="expectation">どんな回答を望んでいましたか:</label>
                     <textarea id="expectation" rows="4"></textarea>
-                    <button id="submit-feedback">Submit</button>
+                    <button id="submit-feedback">提出</button>
                 </div>
 
                 <!-- Clear Storage Button -->
@@ -190,7 +135,7 @@
 
                             const event = new CustomEvent("df-custom-submit-feedback-clicked", {
                                 detail: JSON.stringify({
-                                    "usefulness": 1, // Assuming Thumbs down means usefulness is low
+                                    "usefulness": 1, // ダウンサムで有用性が低いと仮定
                                     "reason": reason,
                                     "expectation": expectation
                                 }),
@@ -199,14 +144,14 @@
                             });
                             document.dispatchEvent(event);
 
-                            // Clear the form and hide it again after submission
+                            // 提出後、フォームをクリアして非表示にする
                             document.getElementById('reason').value = '';
                             document.getElementById('expectation').value = '';
                             feedbackForm.style.display = 'none';
                         });
                     });
                 </script>
-                <!-- End Chat body -->
+                <!-- チャットボディ終了 -->
 
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
                     <span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span>
@@ -217,7 +162,7 @@
 
     <!-- JS -->
     <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=1.0"></script>
 </body>
 
 </html>
