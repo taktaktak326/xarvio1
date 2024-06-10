@@ -74,6 +74,47 @@
         #clear-storage-button:hover {
             background-color: #45a049;
         }
+
+        .feedback-form {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .feedback-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .feedback-form button:hover {
+            background-color: #45a049;
+        }
+
+        .feedback-form label {
+            font-size: 16px;
+            margin-top: 10px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -86,7 +127,7 @@
         </div>
     </header>
 
-    <main class="">
+    <main>
         <section class="section-page--case">
             <div class="container container-option1130">
                 <h1 class="head-title--h1 text-center mb-30"><span>お困りごとは何ですか。</span></h1>
@@ -109,20 +150,60 @@
                         bot-writing-image="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-text="情報を探しています。お待ちください"
-                       
                     ></df-messenger-chat>
                 </df-messenger>
+
+                <!-- Feedback Form -->
+                <div id="feedback-form" class="feedback-form">
+                    <label for="reason">なぜこのレーティングを選びましたか:</label>
+                    <textarea id="reason" rows="4"></textarea>
+                    <label for="expectation">どんな回答を望んでいましたか:</label>
+                    <textarea id="expectation" rows="4"></textarea>
+                    <button id="submit-feedback">Submit</button>
+                </div>
 
                 <!-- Clear Storage Button -->
                 <button id="clear-storage-button">会話履歴を削除</button>
 
                 <script>
-                    // An example of handling events: Navigate to the first suggested URL.
                     document.addEventListener('df-url-suggested', (event) => {
                         if (Array.isArray(event.detail.suggestedUrls) &&
                             event.detail.suggestedUrls.length) {
                             window.location.href = event.detail.suggestedUrls[0];
                         }
+                    });
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const thumbsDownButton = document.querySelector('.thumbs-down');
+                        const feedbackForm = document.getElementById('feedback-form');
+                        const submitFeedbackButton = document.getElementById('submit-feedback');
+
+                        if (thumbsDownButton) {
+                            thumbsDownButton.addEventListener('click', () => {
+                                feedbackForm.style.display = 'block';
+                            });
+                        }
+
+                        submitFeedbackButton.addEventListener('click', () => {
+                            const reason = document.getElementById('reason').value;
+                            const expectation = document.getElementById('expectation').value;
+
+                            const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+                                detail: JSON.stringify({
+                                    "usefulness": 1, // Assuming Thumbs down means usefulness is low
+                                    "reason": reason,
+                                    "expectation": expectation
+                                }),
+                                bubbles: true,
+                                composed: true,
+                            });
+                            document.dispatchEvent(event);
+
+                            // Clear the form and hide it again after submission
+                            document.getElementById('reason').value = '';
+                            document.getElementById('expectation').value = '';
+                            feedbackForm.style.display = 'none';
+                        });
                     });
                 </script>
                 <!-- End Chat body -->
