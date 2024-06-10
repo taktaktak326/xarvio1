@@ -698,14 +698,6 @@ $(document).ready(function($) {
   connectedCallback() {
     const wrapper = document.createElement('div');
 
-    // Thumbs down button
-    const thumbsDownButton = document.createElement('button');
-    thumbsDownButton.innerText = 'Thumbs Down';
-    thumbsDownButton.addEventListener('click', () => {
-      this._onThumbsDownClick();
-    });
-    wrapper.appendChild(thumbsDownButton);
-
     // Form for additional feedback
     this.form = document.createElement('div');
     this.form.style.display = 'none'; // Initially hidden
@@ -771,7 +763,7 @@ $(document).ready(function($) {
     this.renderRoot.appendChild(wrapper);
   }
 
-  _onThumbsDownClick() {
+  showForm() {
     if (this.form) {
       this.form.style.display = 'block'; // Show the form
     }
@@ -802,6 +794,13 @@ $(document).ready(function($) {
 (function() {
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
 })();
+
+// JavaScript to handle the low rating button click
+document.querySelector('.thumbs-down').addEventListener('click', () => {
+  const feedbackElement = document.querySelector('df-external-custom-feedback');
+  feedbackElement.style.display = 'block';
+  feedbackElement.showForm();
+});
 
 
 
