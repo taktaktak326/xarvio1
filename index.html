@@ -45,19 +45,6 @@
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
     <!-- End Chat -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const clearButton = document.getElementById('clear-storage-button');
-            clearButton.addEventListener('click', function() {
-                const dfMessenger = document.querySelector('df-messenger');
-                if (dfMessenger) {
-                    dfMessenger.clearStorage();
-                    alert('Are you sure to clear the conversation?');
-                }
-            });
-        });
-    </script>
-
     <style>
         #clear-storage-button {
             padding: 10px 20px;
@@ -73,6 +60,20 @@
 
         #clear-storage-button:hover {
             background-color: #45a049;
+        }
+
+        df-messenger {
+            --df-messenger-bubble-width: 60px;
+            --df-messenger-bubble-height: 60px;
+            --df-messenger-bubble-bottom: 24px;
+            --df-messenger-bubble-right: 24px;
+        }
+
+        df-messenger-chat-bubble {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -109,17 +110,15 @@
                         bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-text="情報を探しています。お待ちください"
-                       
                     ></df-messenger-chat>
 
                     <df-messenger-chat-bubble
                         chat-title="チャットバブル"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
-                        chat-width = "400px"
-                        chat-height = "600px"
-                        anchor="bottom-right">
-                        
+                        chat-width="400px"
+                        chat-height="600px"
+                    >
                     </df-messenger-chat-bubble>
                 </df-messenger>
 
@@ -127,6 +126,17 @@
                 <button id="clear-storage-button">会話履歴を削除</button>
 
                 <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const clearButton = document.getElementById('clear-storage-button');
+                        clearButton.addEventListener('click', function() {
+                            const dfMessenger = document.querySelector('df-messenger');
+                            if (dfMessenger) {
+                                dfMessenger.clearStorage();
+                                alert('Are you sure to clear the conversation?');
+                            }
+                        });
+                    });
+
                     // An example of handling events: Navigate to the first suggested URL.
                     document.addEventListener('df-url-suggested', (event) => {
                         if (Array.isArray(event.detail.suggestedUrls) &&
