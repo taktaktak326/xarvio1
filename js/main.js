@@ -687,10 +687,8 @@ $(document).ready(function($) {
             textError3.css("display","none");
         }
     });
-        
-
-
     
+
 
     $('.input--none-number').each(function(){
         $(this).on('keyup',function(){
