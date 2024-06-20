@@ -703,7 +703,7 @@ class CustomFeedbackElement extends HTMLElement {
 
     // Build the component as required.
     const button = document.createElement('button');
-    button.innerText = 'Submit';
+    button.innerText = '送信';
     button.addEventListener('click', () => {
       this._onSubmitClick();
     });
