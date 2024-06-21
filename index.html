@@ -99,27 +99,18 @@
                     location="global"
                     project-id="prj-basf-xarviobot-dev"
                     agent-id="961269a7-0404-4be1-a4ed-fbc413dc40c5"
-                    language-code="fr"
+                    language-code="ja"
                     max-query-length="-1"
                     url-allowlist="*"
                     allow-feedback="all"
                 >
-
-
-
-                      <df-messenger-chat
-    chat-title="チャットで相談"
-    bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif"
-    placeholder-text="メッセージを入力してください"
-  >
-    <div slot="custom-feedback">
-      <h3>この回答は役に立ちましたか？</h3>
-      <button value="up">👍 はい</button>
-      <button value="down">👎 いいえ</button>
-      <textarea placeholder="詳しく教えてください..."></textarea>
-    </div>
-  </df-messenger-chat>
-</df-messenger>
+                    <df-messenger-chat
+                        chat-title="チャットで相談"
+                        bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif"
+                        placeholder-text="メッセージを入力してください"
+                        >
+                    </df-messenger-chat>
+                </df-messenger>
                 
 
 
@@ -138,16 +129,6 @@
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const feedbackContainer = document.querySelector('df-messenger-chat div[slot="custom-feedback"]');
-            feedbackContainer.addEventListener('click', (event) => {
-                if (event.target.tagName === 'BUTTON') {
-                    const feedbackValue = event.target.value;
-                    console.log('Feedback:', feedbackValue);
-                    // フィードバックの送信をここに追加 (例: サーバーへの送信)
-                }
-            });
-
             const clearButton = document.getElementById('clear-storage-button');
             clearButton.addEventListener('click', function() {
                 const dfMessenger = document.querySelector('df-messenger');
