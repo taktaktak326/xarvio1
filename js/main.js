@@ -719,6 +719,7 @@ class CustomFeedbackElement extends HTMLElement {
     commentLabel.textContent = '詳細なご意見をお聞かせください:';
     const commentInput = document.createElement('textarea');
     commentInput.placeholder = 'ご意見を入力してください';
+    // ここで修正: form に textarea を追加します
     form.appendChild(commentLabel);
     form.appendChild(commentInput);
 
