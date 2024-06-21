@@ -692,48 +692,54 @@ $(document).ready(function($) {
 class CustomFeedbackElement extends HTMLElement {
   constructor() {
     super();
-    // It is not strictly required but recommended to contain the custom
-    // element in a shadow root.
-    this.renderRoot = this.attachShadow({mode: 'open'});
+    this.renderRoot = this.attachShadow({ mode: 'open' });
   }
 
-  // Web component Lifecycle method.
   connectedCallback() {
     const wrapper = document.createElement('div');
 
-    // Build the component as required.
+    // 回答フォームを作成
+    const form = document.createElement('form');
+    const label = document.createElement('label');
+    label.textContent = '低評価の理由を選択してください:';
+    const select = document.createElement('select');
+    select.innerHTML = `
+      <option value="内容がわかりにくい">内容がわかりにくい</option>
+      <option value="情報が古い">情報が古い</option>
+      <option value="誤った情報">誤った情報</option>
+      <option value="その他">その他</option>
+    `;
+    form.appendChild(label);
+    form.appendChild(select);
+
+    // Submit ボタンを作成
     const button = document.createElement('button');
     button.innerText = 'Submit';
     button.addEventListener('click', () => {
-      this._onSubmitClick();
+      this._onSubmitClick(select.value);
     });
+
+    wrapper.appendChild(form);
     wrapper.appendChild(button);
 
     this.renderRoot.appendChild(wrapper);
   }
 
-  // Called when Submit button is clicked.
-  _onSubmitClick() {
+  _onSubmitClick(reason) {
     const event = new CustomEvent("df-custom-submit-feedback-clicked", {
-      // `detail` may be any string,
-      // this will be sent to the backend to be stored.
       detail: JSON.stringify({
-        "usefulness": 2,
-        "accuracy": 3,
+        usefulness: 2,
+        accuracy: 3,
+        reason: reason,
       }),
-      // Required to propagate up the DOM tree
-      // https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles
       bubbles: true,
-      // Required to propagate across ShadowDOM
-      // https://developer.mozilla.org/en-US/docs/Web/API/Event/composed
       composed: true,
-   });
-   this.dispatchEvent(event);
+    });
+    this.dispatchEvent(event);
   }
 }
 
 (function() {
-  // Registers the element. This name must be "df-external-custom-feedback".
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
 })();
 
