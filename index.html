@@ -164,10 +164,7 @@
         { value: '誤った情報', label: '誤った情報' },
         { value: 'その他', label: 'その他' }
       ];
-      const reasonContainer = document.createElement('div');
-      reasonContainer.style.display = 'flex';
-      reasonContainer.style.gap = '1rem';
-      reasonOptions.forEach(option => {
+      const reasonButtons = reasonOptions.map(option => {
         const button = document.createElement('button');
         button.type = 'button';
         button.value = option.value;
@@ -180,11 +177,12 @@
         button.addEventListener('click', () => {
           this._reasonSelected(option.value);
         });
-        reasonContainer.appendChild(button);
+        return button;
       });
-
       form.appendChild(reasonLabel);
-      form.appendChild(reasonContainer);
+      reasonButtons.forEach(button => {
+        form.appendChild(button);
+      });
 
       // フリーテキスト入力
       const commentLabel = document.createElement('label');
@@ -201,7 +199,7 @@
       // Submit ボタンを作成
       const submitButton = document.createElement('button');
       submitButton.innerText = '送信';
-      submitButton.style.padding = '0.6rem 1rem'; // ボタンのサイズを小さく
+      submitButton.style.padding = '0.8rem 1.2rem';
       submitButton.style.border = 'none';
       submitButton.style.borderRadius = '4px';
       submitButton.style.backgroundColor = '#007bff'; // 例として青色を設定
@@ -211,14 +209,8 @@
         this._onSubmitClick(this.selectedReason, commentInput.value);
       });
 
-      // 送信ボタンを左寄せにする
-      const submitButtonContainer = document.createElement('div');
-      submitButtonContainer.style.display = 'flex';
-      submitButtonContainer.style.justifyContent = 'flex-start';
-      submitButtonContainer.appendChild(submitButton);
-
       wrapper.appendChild(form);
-      wrapper.appendChild(submitButtonContainer);
+      wrapper.appendChild(submitButton);
 
       this.renderRoot.appendChild(wrapper);
     }
