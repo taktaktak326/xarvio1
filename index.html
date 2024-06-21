@@ -69,63 +69,8 @@
             --df-messenger-bubble-right: 24px;
         }
 
-        df-messenger-chat-bubble {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 1000;
-        }
 
-        df-external-custom-feedback {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 24px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
 
-    df-external-custom-feedback label {
-      font-weight: 500;
-    }
-
-    df-external-custom-feedback select,
-    df-external-custom-feedback textarea {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-
-    df-external-custom-feedback textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    df-external-custom-feedback button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    df-external-custom-feedback button:hover {
-      background-color: #45a049;
-    }
-
-        /* フォームを初期状態では非表示にする
-    df-external-custom-feedback form {
-      display: none;
-    }
-
-    低評価ボタンがクリックされたらフォームを表示する 
-    df-external-custom-feedback .show-feedback-form form {
-      display: block;
-    } */
-        
     </style>
 </head>
 
@@ -162,7 +107,7 @@
                         placeholder-text="メッセージを入力してください"
                         bot-writing-text="情報を探しています。お待ちください"
                     >
-                        <button id="clear-storage-button">会話履歴を削除</button>
+                        
                     </df-messenger-chat>
 
                     <df-messenger-chat-bubble
@@ -250,7 +195,7 @@
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
 </script>
                 <!-- Clear Storage Button -->
-
+<button id="clear-storage-button">会話履歴を削除</button>
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
