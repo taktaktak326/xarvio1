@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"> <!-- 'jp' から 'ja' に変更 -->
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
     <meta property="og:description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
     <meta property="og:locale" content="ja_JP">
     <meta http-equiv="x-dns-prefetch-control" content="on">
-    <link rel="preconnect" href="https://www.google-analytics.com"> <!-- 'dns-prefetch' 属性は不要 -->
+    <link rel="preconnect" href="https://www.google-analytics.com">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="apple-touch-icon" href="../img/common/apple-touch-icon.png">
     <link rel="shortcut icon" href="../img/common/favicon.png">
@@ -82,7 +82,7 @@
     <header class="c-header">
         <div class="c-header__inner">
             <a href="/" class="c-header__logo">
-                <img src="../img/common/logo.svg" alt="xarvio Logo"> <!-- alt 属性を追加 -->
+                <img src="../img/common/logo.svg" alt="xarvio Logo">
             </a>
         </div>
     </header>
@@ -119,33 +119,6 @@
                     </df-messenger-chat>
                 </df-messenger>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const feedbackContainer = document.querySelector('df-messenger-chat > div[slot="custom-feedback"]');
-                        feedbackContainer.addEventListener('click', (event) => {
-                            if (event.target.tagName === 'BUTTON') {
-                                const feedbackValue = event.target.value;
-                                console.log('Feedback:', feedbackValue);
-                            }
-                        });
-
-                        const clearButton = document.getElementById('clear-storage-button');
-                        clearButton.addEventListener('click', function() {
-                            const dfMessenger = document.querySelector('df-messenger');
-                            if (dfMessenger) {
-                                dfMessenger.clearStorage();
-                                alert('会話履歴を削除してもよろしいですか？'); <!-- メッセージを日本語に修正 -->
-                            }
-                        });
-
-                        document.addEventListener('df-url-suggested', (event) => {
-                            if (Array.isArray(event.detail.suggestedUrls) && event.detail.suggestedUrls.length) {
-                                window.location.href = event.detail.suggestedUrls[0];
-                            }
-                        });
-                    });
-                </script>
-
                 <!-- Clear Storage Button -->
                 <button id="clear-storage-button">会話履歴を削除</button>
 
@@ -159,6 +132,33 @@
     <!-- JS -->
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const feedbackContainer = document.querySelector('df-messenger-chat div[slot="custom-feedback"]');
+            feedbackContainer.addEventListener('click', (event) => {
+                if (event.target.tagName === 'BUTTON') {
+                    const feedbackValue = event.target.value;
+                    console.log('Feedback:', feedbackValue);
+                    // フィードバックの送信をここに追加 (例: サーバーへの送信)
+                }
+            });
+
+            const clearButton = document.getElementById('clear-storage-button');
+            clearButton.addEventListener('click', function() {
+                const dfMessenger = document.querySelector('df-messenger');
+                if (dfMessenger) {
+                    dfMessenger.clearStorage();
+                    alert('会話履歴を削除してもよろしいですか？');
+                }
+            });
+
+            document.addEventListener('df-url-suggested', (event) => {
+                if (Array.isArray(event.detail.suggestedUrls) && event.detail.suggestedUrls.length) {
+                    window.location.href = event.detail.suggestedUrls[0];
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
