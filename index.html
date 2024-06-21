@@ -115,6 +115,16 @@
     df-external-custom-feedback button:hover {
       background-color: #45a049;
     }
+
+        /* フォームを初期状態では非表示にする */
+    df-external-custom-feedback form {
+      display: none;
+    }
+
+    /* 低評価ボタンがクリックされたらフォームを表示する */
+    df-external-custom-feedback .show-feedback-form form {
+      display: block;
+    }
     </style>
 </head>
 
@@ -192,7 +202,11 @@
       `;
       form.appendChild(reasonLabel);
       form.appendChild(reasonSelect);
-
+        
+      // **改行を追加**
+      const br = document.createElement('br');
+      form.appendChild(br);
+        
       // フリーテキスト入力
       const commentLabel = document.createElement('label');
       commentLabel.textContent = '詳細なご意見をお聞かせください:';
