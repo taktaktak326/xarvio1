@@ -199,17 +199,16 @@
       // Submit ボタンを作成
       const submitButton = document.createElement('button');
       submitButton.innerText = '送信';
-      submitButton.style.padding = '0.6rem 1rem'; // ボタンのサイズを小さく
+      submitButton.style.padding = '0.6rem 1rem'; 
       submitButton.style.border = 'none';
       submitButton.style.borderRadius = '4px';
-      submitButton.style.backgroundColor = '#007bff'; // 例として青色を設定
+      submitButton.style.backgroundColor = '#007bff'; 
       submitButton.style.color = 'white';
       submitButton.style.cursor = 'pointer';
       submitButton.addEventListener('click', () => {
         this._onSubmitClick(this.selectedReason, commentInput.value);
       });
 
-      // 送信ボタンを左寄せにする
       const submitButtonContainer = document.createElement('div');
       submitButtonContainer.style.display = 'flex';
       submitButtonContainer.style.justifyContent = 'flex-start';
