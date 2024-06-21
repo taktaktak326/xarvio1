@@ -138,7 +138,6 @@
       super();
       this.renderRoot = this.attachShadow({ mode: 'open' });
       this.selectedReason = null;
-      this.submitButton = null; // 送信ボタンを格納
     }
 
     connectedCallback() {
@@ -198,15 +197,15 @@
       form.appendChild(commentInput);
 
       // Submit ボタンを作成
-      this.submitButton = document.createElement('button');
-      this.submitButton.innerText = '送信';
-      this.submitButton.style.padding = '0.6rem 1rem'; // ボタンのサイズを小さく
-      this.submitButton.style.border = 'none';
-      this.submitButton.style.borderRadius = '4px';
-      this.submitButton.style.backgroundColor = '#007bff'; // 例として青色を設定
-      this.submitButton.style.color = 'white';
-      this.submitButton.style.cursor = 'pointer';
-      this.submitButton.addEventListener('click', () => {
+      const submitButton = document.createElement('button');
+      submitButton.innerText = '送信';
+      submitButton.style.padding = '0.6rem 1rem'; // ボタンのサイズを小さく
+      submitButton.style.border = 'none';
+      submitButton.style.borderRadius = '4px';
+      submitButton.style.backgroundColor = '#007bff'; // 例として青色を設定
+      submitButton.style.color = 'white';
+      submitButton.style.cursor = 'pointer';
+      submitButton.addEventListener('click', () => {
         this._onSubmitClick(this.selectedReason, commentInput.value);
       });
 
@@ -214,7 +213,7 @@
       const submitButtonContainer = document.createElement('div');
       submitButtonContainer.style.display = 'flex';
       submitButtonContainer.style.justifyContent = 'flex-start';
-      submitButtonContainer.appendChild(this.submitButton);
+      submitButtonContainer.appendChild(submitButton);
 
       wrapper.appendChild(form);
       wrapper.appendChild(submitButtonContainer);
@@ -227,10 +226,6 @@
     }
 
     _onSubmitClick(reason, comment) {
-      // 送信ボタンを無効化
-      this.submitButton.disabled = true;
-      this.submitButton.textContent = '送信中...';
-
       const event = new CustomEvent("df-custom-submit-feedback-clicked", {
         detail: JSON.stringify({
           usefulness: 2,
@@ -242,12 +237,6 @@
         composed: true,
       });
       this.dispatchEvent(event);
-
-      // 1 秒後に送信完了メッセージを表示
-      setTimeout(() => {
-        this.submitButton.textContent = 'フィードバックが送信されました';
-        this.submitButton.style.backgroundColor = 'green';
-      }, 1000);
     }
   }
 
