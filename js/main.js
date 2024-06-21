@@ -689,71 +689,7 @@ $(document).ready(function($) {
     });
 
 //ここから
-class CustomFeedbackElement extends HTMLElement {
-  constructor() {
-    super();
-    this.renderRoot = this.attachShadow({ mode: 'open' });
-  }
 
-  connectedCallback() {
-    const wrapper = document.createElement('div');
-
-    // 回答フォームを作成
-    const form = document.createElement('form');
-
-    // 低評価の理由選択
-    const reasonLabel = document.createElement('label');
-    reasonLabel.textContent = '低評価の理由を選択してください:';
-    const reasonSelect = document.createElement('select');
-    reasonSelect.innerHTML = `
-      <option value="内容がわかりにくい">内容がわかりにくい</option>
-      <option value="情報が古い">情報が古い</option>
-      <option value="誤った情報">誤った情報</option>
-      <option value="その他">その他</option>
-    `;
-    form.appendChild(reasonLabel);
-    form.appendChild(reasonSelect);
-
-    // フリーテキスト入力
-    const commentLabel = document.createElement('label');
-    commentLabel.textContent = '詳細なご意見をお聞かせください:';
-    const commentInput = document.createElement('textarea');
-    commentInput.placeholder = 'ご意見を入力してください';
-    // ここで修正: form に textarea を追加します
-    form.appendChild(commentLabel);
-    form.appendChild(commentInput);
-
-    // Submit ボタンを作成
-    const button = document.createElement('button');
-    button.innerText = 'Submit';
-    button.addEventListener('click', () => {
-      this._onSubmitClick(reasonSelect.value, commentInput.value);
-    });
-
-    wrapper.appendChild(form);
-    wrapper.appendChild(button);
-
-    this.renderRoot.appendChild(wrapper);
-  }
-
-  _onSubmitClick(reason, comment) {
-    const event = new CustomEvent("df-custom-submit-feedback-clicked", {
-      detail: JSON.stringify({
-        usefulness: 2,
-        accuracy: 3,
-        reason: reason,
-        comment: comment,
-      }),
-      bubbles: true,
-      composed: true,
-    });
-    this.dispatchEvent(event);
-  }
-}
-
-(function() {
-  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
-})();
 
     //ここまで
 
