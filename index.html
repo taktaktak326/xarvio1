@@ -162,7 +162,7 @@
       reasonSelect.style.padding = '0.8rem';
       reasonSelect.style.border = '1px solid #ccc';
       reasonSelect.style.borderRadius = '4px';
-      reasonSelect.style.backgroundColor = 'white'; 
+      reasonSelect.style.backgroundColor = 'white';
       reasonSelect.style.cursor = 'pointer';
       const reasonOptions = [
         { value: '内容がわかりにくい', label: '内容がわかりにくい' },
@@ -199,10 +199,10 @@
       // Submit ボタンを作成
       const submitButton = document.createElement('button');
       submitButton.innerText = '送信';
-      submitButton.style.padding = '0.6rem 1rem'; 
+      submitButton.style.padding = '0.6rem 1rem';
       submitButton.style.border = 'none';
       submitButton.style.borderRadius = '4px';
-      submitButton.style.backgroundColor = '#007bff'; 
+      submitButton.style.backgroundColor = '#007bff';
       submitButton.style.color = 'white';
       submitButton.style.cursor = 'pointer';
       submitButton.addEventListener('click', () => {
@@ -218,6 +218,13 @@
       wrapper.appendChild(submitButtonContainer);
 
       this.renderRoot.appendChild(wrapper);
+
+      // イベントリスナーを追加
+      this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
+        const feedbackData = JSON.parse(event.detail);
+        // サーバーに送信する処理を追加
+        console.log('Feedback:', feedbackData);
+      });
     }
 
     _reasonSelected(value) {
