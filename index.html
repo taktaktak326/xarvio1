@@ -174,7 +174,8 @@
                     >
                     </df-messenger-chat-bubble>
                 </df-messenger>
-
+                <button id="clear-storage-button">会話履歴を削除</button>
+                
 <!--フィードバック回答スクリプト-->
 <script>
   class CustomFeedbackElement extends HTMLElement {
@@ -245,7 +246,7 @@
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
 </script>
                 <!-- Clear Storage Button -->
-                <button id="clear-storage-button">会話履歴を削除</button>
+
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
@@ -254,7 +255,7 @@
                             const dfMessenger = document.querySelector('df-messenger');
                             if (dfMessenger) {
                                 dfMessenger.clearStorage();
-                                alert('Are you sure to clear the conversation?');
+                                alert('会話の履歴を削除します');
                             }
                         });
                     });
