@@ -175,7 +175,6 @@
                     </df-messenger-chat-bubble>
                 </df-messenger>
 
-                <df-external-custom-feedback></df-external-custom-feedback>
 <!--フィードバック回答スクリプト-->
 <script>
   class CustomFeedbackElement extends HTMLElement {
@@ -217,7 +216,7 @@
 
       // Submit ボタンを作成
       const button = document.createElement('button');
-      button.innerText = 'Submit';
+      button.innerText = '送信';
       button.addEventListener('click', () => {
         this._onSubmitClick(reasonSelect.value, commentInput.value);
       });
