@@ -247,12 +247,6 @@
       setTimeout(() => {
         this.submitButton.textContent = 'フィードバックが送信されました';
         this.submitButton.style.backgroundColor = 'green';
-        // 3 秒後に送信ボタンを元の状態に戻す
-        setTimeout(() => {
-          this.submitButton.disabled = false;
-          this.submitButton.textContent = '送信';
-          this.submitButton.style.backgroundColor = '#007bff';
-        }, 3000);
       }, 1000);
     }
   }
