@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="jp">
 
 <head>
     <meta charset="UTF-8">
@@ -16,8 +16,8 @@
     <meta property="og:description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
     <meta property="og:locale" content="ja_JP">
     <meta http-equiv="x-dns-prefetch-control" content="on">
-    <link rel="preconnect" href="https://www.google-analytics.com">
-    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="preconnect dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="apple-touch-icon" href="../img/common/apple-touch-icon.png">
     <link rel="shortcut icon" href="../img/common/favicon.png">
     <!-- Google Tag Manager -->
@@ -82,12 +82,12 @@
     <header class="c-header">
         <div class="c-header__inner">
             <a href="/" class="c-header__logo">
-                <img src="../img/common/logo.svg" alt="xarvio Logo">
+                <img src="../img/common/logo.svg" alt="">
             </a>
         </div>
     </header>
 
-    <main>
+    <main class="">
         <section class="section-page--case">
             <div class="container container-option1130">
                 <h1 class="head-title--h1 text-center mb-30"><span>お困りごとは何ですか。</span></h1>
@@ -95,6 +95,7 @@
                     AIがあなたの質問に24時間365日、お答えいたします。
                 </div>
 
+                <!-- Chatbody -->
                 <df-messenger
                     location="global"
                     project-id="prj-basf-xarviobot-dev"
@@ -106,17 +107,48 @@
                 >
                     <df-messenger-chat
                         chat-title="チャットで相談"
-                        bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif"
+                        bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
                         placeholder-text="メッセージを入力してください"
-                        >
-                    </df-messenger-chat>
+                        bot-writing-text="情報を探しています。お待ちください"
+                    ></df-messenger-chat>
+
+                    <df-messenger-chat-bubble
+                        chat-title="チャットバブル"
+                        placeholder-text="メッセージを入力してください"
+                        bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
+                        chat-width="auto"
+                        
+                        
+                        chat-height="auto"
+                        chat-icon="https://assets.dryicons.com/uploads/icon/svg/6936/80f19367-684f-4246-9540-0af174a1875c.svg"
+                    >
+                    </df-messenger-chat-bubble>
                 </df-messenger>
-                
 
-
-                
                 <!-- Clear Storage Button -->
                 <button id="clear-storage-button">会話履歴を削除</button>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const clearButton = document.getElementById('clear-storage-button');
+                        clearButton.addEventListener('click', function() {
+                            const dfMessenger = document.querySelector('df-messenger');
+                            if (dfMessenger) {
+                                dfMessenger.clearStorage();
+                                alert('Are you sure to clear the conversation?');
+                            }
+                        });
+                    });
+
+                    // An example of handling events: Navigate to the first suggested URL.
+                    document.addEventListener('df-url-suggested', (event) => {
+                        if (Array.isArray(event.detail.suggestedUrls) &&
+                            event.detail.suggestedUrls.length) {
+                            window.location.href = event.detail.suggestedUrls[0];
+                        }
+                    });
+                </script>
+                <!-- End Chat body -->
 
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
                     <span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span>
@@ -128,23 +160,6 @@
     <!-- JS -->
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-            const clearButton = document.getElementById('clear-storage-button');
-            clearButton.addEventListener('click', function() {
-                const dfMessenger = document.querySelector('df-messenger');
-                if (dfMessenger) {
-                    dfMessenger.clearStorage();
-                    alert('会話履歴を削除してもよろしいですか？');
-                }
-            });
-
-            document.addEventListener('df-url-suggested', (event) => {
-                if (Array.isArray(event.detail.suggestedUrls) && event.detail.suggestedUrls.length) {
-                    window.location.href = event.detail.suggestedUrls[0];
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
