@@ -102,23 +102,25 @@
                     language-code="ja"
                     max-query-length="-1"
                     url-allowlist="*"
-                    
+                    allow-feedback="all"
                 >
                     <df-messenger-chat
                         chat-title="チャットで相談"
                         bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif"
                         placeholder-text="メッセージを入力してください"
                     >
-                        <!-- Custom Feedback Component -->
-                        <div slot="custom-feedback">
-                            <h3>Was this helpful?</h3>
-                            <button value="up">👍 Yes</button>
-                            <button value="down">👎 No</button>
-                            <textarea placeholder="Tell us more..."></textarea>
-                        </div>
+
                     </df-messenger-chat>
                 </df-messenger>
 
+              <!-- Custom Feedback Component -->
+                <div id="custom-feedback-container" style="display: none;">
+                    <h3>Was this helpful?</h3>
+                    <button value="up">👍 Yes</button>
+                    <button value="down">👎 No</button>
+                    <textarea placeholder="Tell us more..."></textarea>
+                </div>
+                
                 <!-- Clear Storage Button -->
                 <button id="clear-storage-button">会話履歴を削除</button>
 
