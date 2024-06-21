@@ -104,20 +104,23 @@
                     url-allowlist="*"
                     allow-feedback="all"
                 >
-                    <df-messenger-chat
-                        chat-title="チャットで相談"
-                        bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif"
-                        placeholder-text="メッセージを入力してください"
-                    >
-              <!-- Custom Feedback Component -->
-                <div slot ="custom-feedback">
-                    <h3>Was this helpful?</h3>
-                    <button value="up">👍 Yes</button>
-                    <button value="down">👎 No</button>
-                    <textarea placeholder="Tell us more..."></textarea>
-                </div>
-                    </df-messenger-chat>
-                </df-messenger>
+
+
+
+                      <df-messenger-chat
+    chat-title="チャットで相談"
+    bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif"
+    placeholder-text="メッセージを入力してください"
+  >
+    <div slot="custom-feedback">
+      <h3>この回答は役に立ちましたか？</h3>
+      <button value="up">👍 はい</button>
+      <button value="down">👎 いいえ</button>
+      <textarea placeholder="詳しく教えてください..."></textarea>
+    </div>
+  </df-messenger-chat>
+</df-messenger>
+                
 
 
                 
