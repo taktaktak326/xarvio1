@@ -69,6 +69,12 @@
             --df-messenger-bubble-right: 24px;
         }
 
+        df-messenger-chat-bubble {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
 
 
     </style>
@@ -195,7 +201,7 @@
       // Submit ボタンを作成
       const submitButton = document.createElement('button');
       submitButton.innerText = '送信';
-      submitButton.style.padding = '0.8rem 1.2rem';
+      submitButton.style.padding = '0.6rem 1rem'; // ボタンのサイズを小さく
       submitButton.style.border = 'none';
       submitButton.style.borderRadius = '4px';
       submitButton.style.backgroundColor = '#007bff'; // 例として青色を設定
@@ -205,8 +211,14 @@
         this._onSubmitClick(this.selectedReason, commentInput.value);
       });
 
+      // 送信ボタンを左寄せにする
+      const submitButtonContainer = document.createElement('div');
+      submitButtonContainer.style.display = 'flex';
+      submitButtonContainer.style.justifyContent = 'flex-start';
+      submitButtonContainer.appendChild(submitButton);
+
       wrapper.appendChild(form);
-      wrapper.appendChild(submitButton);
+      wrapper.appendChild(submitButtonContainer);
 
       this.renderRoot.appendChild(wrapper);
     }
