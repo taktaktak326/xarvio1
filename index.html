@@ -1,162 +1,235 @@
 <!DOCTYPE html>
+
 <html lang="jp">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex">
-    <title>お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー</title>
-    <meta name="description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
-    <meta property="og:title" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
-    <meta property="og:type" content="product">
-    <meta property="og:url" content="https://www.xarvio-japan.jp/chat/index.html">
-    <meta property="og:image" content="https://www.xarvio-japan.jp/img/common/xarvio-ogp.png">
-    <meta property="og:site_name" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
-    <meta property="og:description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
-    <meta property="og:locale" content="ja_JP">
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-    <link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-    <link rel="preconnect dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="apple-touch-icon" href="../img/common/apple-touch-icon.png">
-    <link rel="shortcut icon" href="../img/common/favicon.png">
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-5KGNCRF');
-    </script>
-    <!-- End Google Tag Manager -->
 
-    <link rel="stylesheet" href="public/styles/style.css">
+  <meta charset="UTF-8">
 
-    <!-- Chat -->
-    <link rel="stylesheet" href="public/styles/df-messenger-default.css">
-    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <!-- End Chat -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <style>
-        #clear-storage-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto;
-        }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        #clear-storage-button:hover {
-            background-color: #45a049;
-        }
+  <meta name="robots" content="noindex">
 
-        df-messenger {
-            --df-messenger-bubble-width: 60px;
-            --df-messenger-bubble-height: 60px;
-            --df-messenger-bubble-bottom: 24px;
-            --df-messenger-bubble-right: 24px;
-        }
+  <title>お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー</title>
 
-        df-messenger-chat-bubble {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 1000;
-        }
-    </style>
+  <meta name="description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
+
+  <meta property="og:title" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
+
+  <meta property="og:type" content="product">
+
+  <meta property="og:url" content="https://www.xarvio-japan.jp/chat/index.html">
+
+  <meta property="og:image" content="https://www.xarvio-japan.jp/img/common/xarvio-ogp.png">
+
+  <meta property="og:site_name" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
+
+  <meta property="og:description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
+
+  <meta property="og:locale" content="ja_JP">
+
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+
+  <link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+
+  <link rel="preconnect dns-prefetch" href="https://www.googletagmanager.com">
+
+  <link rel="apple-touch-icon" href="../img/common/apple-touch-icon.png">
+
+  <link rel="shortcut icon" href="../img/common/favicon.png">
+
+  <!-- Google Tag Manager -->
+
+  <script>
+
+    (function(w, d, s, l, i) {
+
+      w[l] = w[l] || [];
+
+      w[l].push({
+
+        'gtm.start': new Date().getTime(),
+
+        event: 'gtm.js'
+
+      });
+
+      var f = d.getElementsByTagName(s)[0],
+
+        j = d.createElement(s),
+
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+
+      j.async = true;
+
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+
+      f.parentNode.insertBefore(j, f);
+
+    })(window, document, 'script', 'dataLayer', 'GTM-5KGNCRF');
+
+  </script>
+
+  <!-- End Google Tag Manager -->
+
+
+  <link rel="stylesheet" href="../public/styles/style.css">
+
+  <!-- Chat -->
+
+  <link rel="stylesheet" href="/public/styles/df-messenger-default.css">
+
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+
+
+  <!-- End Chat -->
+
+
 </head>
 
 <body>
-    <header class="c-header">
-        <div class="c-header__inner">
-            <a href="/" class="c-header__logo">
-                <img src="../img/common/logo.svg" alt="">
-            </a>
+
+
+  <header class="c-header">
+
+    <div class="c-header__inner">
+
+      <a href="/" class="c-header__logo">
+
+        <img src="../img/common/logo.svg" alt="">
+
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <main class="">
+
+    <section class="section-page--case">
+
+      <div class="container container-option1130">
+
+        <h1 class="head-title--h1 text-center mb-30"><span>お困りごとは何ですか。</span></h1>
+
+        <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
+
+          AIがあなたの質問に24時間365日、お答えいたします。
+
         </div>
-    </header>
 
-    <main class="">
-        <section class="section-page--case">
-            <div class="container container-option1130">
-                <h1 class="head-title--h1 text-center mb-30"><span>お困りごとは何ですか。</span></h1>
-                <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
-                    AIがあなたの質問に24時間365日、お答えいたします。
-                </div>
 
-                <!-- Chatbody -->
-                <df-messenger
-                    location="global"
-                    project-id="prj-basf-xarviobot-dev"
-                    agent-id="961269a7-0404-4be1-a4ed-fbc413dc40c5"
-                    language-code="ja"
-                    max-query-length="-1"
-                    url-allowlist="*"
-                    allow-feedback="all"
-                >
-                    <df-messenger-chat
-                        chat-title="チャットで相談"
-                        bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
-                        placeholder-text="メッセージを入力してください"
-                        bot-writing-text="情報を探しています。お待ちください"
-                    ></df-messenger-chat>
+        <!-- Chatbody -->
 
-                    <df-messenger-chat-bubble
-                        chat-title="チャットバブル"
-                        placeholder-text="メッセージを入力してください"
-                        bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
-                        chat-width="400px"
-                        chat-height="600px"
-                    >
-                    </df-messenger-chat-bubble>
-                </df-messenger>
+        <df-messenger
 
-                <!-- Clear Storage Button -->
-                <button id="clear-storage-button">会話履歴を削除</button>
+          location="global"
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const clearButton = document.getElementById('clear-storage-button');
-                        clearButton.addEventListener('click', function() {
-                            const dfMessenger = document.querySelector('df-messenger');
-                            if (dfMessenger) {
-                                dfMessenger.clearStorage();
-                                alert('Are you sure to clear the conversation?');
-                            }
-                        });
-                    });
+          project-id="prj-basf-xarviobot-prod"
 
-                    // An example of handling events: Navigate to the first suggested URL.
-                    document.addEventListener('df-url-suggested', (event) => {
-                        if (Array.isArray(event.detail.suggestedUrls) &&
-                            event.detail.suggestedUrls.length) {
-                            window.location.href = event.detail.suggestedUrls[0];
-                        }
-                    });
-                </script>
-                <!-- End Chat body -->
+          agent-id="36ae69bd-9db5-481f-9a57-1cdd60ee84ec"
 
-                <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
-                    <span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span>
-                </div>
+          allow-feedback="all"
+
+          language-code="ja"
+
+          max-query-length="-1"
+
+          url-allowlist="*"
+
+        >
+
+          <df-messenger-chat
+
+            chat-title="チャットで相談"
+
+            bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif"
+
+            placeholder-text="メッセージを入力してください"
+
+          >
+
+            <!-- Custom Feedback Component -->
+
+            <div slot="custom-feedback">
+
+              <h3>Was this helpful?</h3>
+
+              <button value="up">👍 Yes</button>
+
+              <button value="down">👎 No</button>
+
+              <textarea placeholder="Tell us more..."></textarea>
+
             </div>
-        </section>
-    </main>
 
-    <!-- JS -->
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/main.js"></script>
+          </df-messenger-chat>
+
+        </df-messenger>
+
+
+        <script>
+
+          // Handle feedback button clicks
+
+          const feedbackContainer = document.querySelector('df-messenger-chat > div[slot="custom-feedback"]');
+
+          feedbackContainer.addEventListener('click', (event) => {
+
+            if (event.target.tagName === 'BUTTON') {
+
+              const feedbackValue = event.target.value;
+
+              // Send feedback to your system (e.g., log to console)
+
+              console.log('Feedback:', feedbackValue);
+
+              // Optionally, close the feedback form or display a confirmation message
+
+            }
+
+          });
+
+        </script>
+
+        <!-- End Chat body -->
+
+        <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
+
+          <span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+  <!--<footer class="c-footer">
+
+    <div data-includeHTML="../footer.html"></div>
+
+    <div data-includeHTML="../footer-copyright.html"></div>
+
+  </footer>-->
+
+
+  <!--<div class="modal"></div>-->
+
+
+  <!-- JS -->
+
+  <script src="../js/jquery-3.6.0.min.js"></script>
+
+  <script src="../js/main.js"></script>
+
 </body>
 
 </html>
+
