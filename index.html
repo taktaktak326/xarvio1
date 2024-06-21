@@ -158,31 +158,31 @@
       // 低評価の理由選択
       const reasonLabel = document.createElement('label');
       reasonLabel.textContent = '低評価の理由を選択してください:';
+      const reasonSelect = document.createElement('select');
+      reasonSelect.style.padding = '0.8rem';
+      reasonSelect.style.border = '1px solid #ccc';
+      reasonSelect.style.borderRadius = '4px';
+      reasonSelect.style.backgroundColor = 'white'; 
+      reasonSelect.style.cursor = 'pointer';
       const reasonOptions = [
         { value: '内容がわかりにくい', label: '内容がわかりにくい' },
         { value: '情報が古い', label: '情報が古い' },
         { value: '誤った情報', label: '誤った情報' },
         { value: 'その他', label: 'その他' }
       ];
-      const reasonButtons = reasonOptions.map(option => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.value = option.value;
-        button.textContent = option.label;
-        button.style.padding = '0.8rem 1.2rem';
-        button.style.border = 'none';
-        button.style.borderRadius = '4px';
-        button.style.backgroundColor = 'white'; // 初期色は白
-        button.style.cursor = 'pointer';
-        button.addEventListener('click', () => {
-          this._reasonSelected(option.value);
-        });
-        return button;
+      reasonOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+        reasonSelect.appendChild(optionElement);
       });
+
+      reasonSelect.addEventListener('change', () => {
+        this._reasonSelected(reasonSelect.value);
+      });
+
       form.appendChild(reasonLabel);
-      reasonButtons.forEach(button => {
-        form.appendChild(button);
-      });
+      form.appendChild(reasonSelect);
 
       // フリーテキスト入力
       const commentLabel = document.createElement('label');
@@ -199,7 +199,7 @@
       // Submit ボタンを作成
       const submitButton = document.createElement('button');
       submitButton.innerText = '送信';
-      submitButton.style.padding = '0.8rem 1.2rem';
+      submitButton.style.padding = '0.6rem 1rem'; // ボタンのサイズを小さく
       submitButton.style.border = 'none';
       submitButton.style.borderRadius = '4px';
       submitButton.style.backgroundColor = '#007bff'; // 例として青色を設定
@@ -209,26 +209,20 @@
         this._onSubmitClick(this.selectedReason, commentInput.value);
       });
 
+      // 送信ボタンを左寄せにする
+      const submitButtonContainer = document.createElement('div');
+      submitButtonContainer.style.display = 'flex';
+      submitButtonContainer.style.justifyContent = 'flex-start';
+      submitButtonContainer.appendChild(submitButton);
+
       wrapper.appendChild(form);
-      wrapper.appendChild(submitButton);
+      wrapper.appendChild(submitButtonContainer);
 
       this.renderRoot.appendChild(wrapper);
     }
 
     _reasonSelected(value) {
       this.selectedReason = value;
-
-      // すべてのボタンの色をリセット
-      const buttons = this.renderRoot.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.style.backgroundColor = 'white'; // 例として白を設定
-      });
-
-      // 選択されたボタンの色を変更
-      const selectedButton = this.renderRoot.querySelector(`button[value="${value}"]`);
-      if (selectedButton) {
-        selectedButton.style.backgroundColor = '#007bff'; // 例として青色を設定
-      }
     }
 
     _onSubmitClick(reason, comment) {
