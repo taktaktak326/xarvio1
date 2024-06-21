@@ -110,7 +110,7 @@
                         
                     </df-messenger-chat>
 
-                    <!--df-messenger-chat-bubble
+                    <df-messenger-chat-bubble
                         chat-title="チャットバブル"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
@@ -120,7 +120,7 @@
                         chat-height="auto"
                         chat-icon="https://assets.dryicons.com/uploads/icon/svg/6936/80f19367-684f-4246-9540-0af174a1875c.svg"
                     >
-                    </df-messenger-chat-bubble-->
+                    </df-messenger-chat-bubble>
                     
                 </df-messenger>
 
@@ -158,7 +158,10 @@
         { value: '誤った情報', label: '誤った情報' },
         { value: 'その他', label: 'その他' }
       ];
-      const reasonButtons = reasonOptions.map(option => {
+      const reasonContainer = document.createElement('div');
+      reasonContainer.style.display = 'flex';
+      reasonContainer.style.gap = '1rem';
+      reasonOptions.forEach(option => {
         const button = document.createElement('button');
         button.type = 'button';
         button.value = option.value;
@@ -171,12 +174,11 @@
         button.addEventListener('click', () => {
           this._reasonSelected(option.value);
         });
-        return button;
+        reasonContainer.appendChild(button);
       });
+
       form.appendChild(reasonLabel);
-      reasonButtons.forEach(button => {
-        form.appendChild(button);
-      });
+      form.appendChild(reasonContainer);
 
       // フリーテキスト入力
       const commentLabel = document.createElement('label');
