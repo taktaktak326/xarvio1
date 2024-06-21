@@ -110,7 +110,7 @@
                         
                     </df-messenger-chat>
 
-                    <df-messenger-chat-bubble
+                    <!--df-messenger-chat-bubble
                         chat-title="チャットバブル"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
@@ -120,7 +120,7 @@
                         chat-height="auto"
                         chat-icon="https://assets.dryicons.com/uploads/icon/svg/6936/80f19367-684f-4246-9540-0af174a1875c.svg"
                     >
-                    </df-messenger-chat-bubble>
+                    </df-messenger-chat-bubble-->
                     
                 </df-messenger>
 
@@ -136,9 +136,18 @@
 
     connectedCallback() {
       const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.flexDirection = 'column';
+      wrapper.style.gap = '1rem';
+      wrapper.style.padding = '1rem';
+      wrapper.style.border = '1px solid #ccc';
+      wrapper.style.borderRadius = '4px';
 
       // 回答フォームを作成
       const form = document.createElement('form');
+      form.style.display = 'flex';
+      form.style.flexDirection = 'column';
+      form.style.gap = '1rem';
 
       // 低評価の理由選択
       const reasonLabel = document.createElement('label');
@@ -154,6 +163,11 @@
         button.type = 'button';
         button.value = option.value;
         button.textContent = option.label;
+        button.style.padding = '0.8rem 1.2rem';
+        button.style.border = 'none';
+        button.style.borderRadius = '4px';
+        button.style.backgroundColor = 'white'; // 初期色は白
+        button.style.cursor = 'pointer';
         button.addEventListener('click', () => {
           this._reasonSelected(option.value);
         });
@@ -162,25 +176,29 @@
       form.appendChild(reasonLabel);
       reasonButtons.forEach(button => {
         form.appendChild(button);
-        // 最初はすべてのボタンの色を初期化する
-        button.style.backgroundColor = 'white'; // 例として白を設定
       });
-
-      // 改行を追加
-      const br = document.createElement('br');
-      form.appendChild(br);
 
       // フリーテキスト入力
       const commentLabel = document.createElement('label');
       commentLabel.textContent = '詳細なご意見をお聞かせください:';
       const commentInput = document.createElement('textarea');
       commentInput.placeholder = 'ご意見を入力してください';
+      commentInput.style.padding = '0.8rem';
+      commentInput.style.border = '1px solid #ccc';
+      commentInput.style.borderRadius = '4px';
+      commentInput.style.resize = 'vertical';
       form.appendChild(commentLabel);
       form.appendChild(commentInput);
 
       // Submit ボタンを作成
       const submitButton = document.createElement('button');
       submitButton.innerText = '送信';
+      submitButton.style.padding = '0.8rem 1.2rem';
+      submitButton.style.border = 'none';
+      submitButton.style.borderRadius = '4px';
+      submitButton.style.backgroundColor = '#007bff'; // 例として青色を設定
+      submitButton.style.color = 'white';
+      submitButton.style.cursor = 'pointer';
       submitButton.addEventListener('click', () => {
         this._onSubmitClick(this.selectedReason, commentInput.value);
       });
@@ -203,7 +221,7 @@
       // 選択されたボタンの色を変更
       const selectedButton = this.renderRoot.querySelector(`button[value="${value}"]`);
       if (selectedButton) {
-        selectedButton.style.backgroundColor = 'lightblue'; // 例として薄い青色を設定
+        selectedButton.style.backgroundColor = '#007bff'; // 例として青色を設定
       }
     }
 
@@ -227,6 +245,7 @@
 
 
                 <!-- Feedback -->
+                
                 <!-- Clear Storage Button -->
 <button id="clear-storage-button">会話履歴を削除</button>
 
