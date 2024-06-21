@@ -131,6 +131,7 @@
     constructor() {
       super();
       this.renderRoot = this.attachShadow({ mode: 'open' });
+      this.selectedReason = null;
     }
 
     connectedCallback() {
@@ -159,7 +160,11 @@
         return button;
       });
       form.appendChild(reasonLabel);
-      reasonButtons.forEach(button => form.appendChild(button));
+      reasonButtons.forEach(button => {
+        form.appendChild(button);
+        // 最初はすべてのボタンの色を初期化する
+        button.style.backgroundColor = 'white'; // 例として白を設定
+      });
 
       // 改行を追加
       const br = document.createElement('br');
@@ -188,7 +193,18 @@
 
     _reasonSelected(value) {
       this.selectedReason = value;
-      // 選択されたボタンを強調表示するなどの処理を追加できます。
+
+      // すべてのボタンの色をリセット
+      const buttons = this.renderRoot.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.style.backgroundColor = 'white'; // 例として白を設定
+      });
+
+      // 選択されたボタンの色を変更
+      const selectedButton = this.renderRoot.querySelector(`button[value="${value}"]`);
+      if (selectedButton) {
+        selectedButton.style.backgroundColor = 'lightblue'; // 例として薄い青色を設定
+      }
     }
 
     _onSubmitClick(reason, comment) {
@@ -207,7 +223,6 @@
   }
 
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
-</script>
 </script>
 
 
