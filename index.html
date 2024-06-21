@@ -142,20 +142,29 @@
       // 低評価の理由選択
       const reasonLabel = document.createElement('label');
       reasonLabel.textContent = '低評価の理由を選択してください:';
-      const reasonSelect = document.createElement('select');
-      reasonSelect.innerHTML = `
-        <option value="内容がわかりにくい">内容がわかりにくい</option>
-        <option value="情報が古い">情報が古い</option>
-        <option value="誤った情報">誤った情報</option>
-        <option value="その他">その他</option>
-      `;
+      const reasonOptions = [
+        { value: '内容がわかりにくい', label: '内容がわかりにくい' },
+        { value: '情報が古い', label: '情報が古い' },
+        { value: '誤った情報', label: '誤った情報' },
+        { value: 'その他', label: 'その他' }
+      ];
+      const reasonButtons = reasonOptions.map(option => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.value = option.value;
+        button.textContent = option.label;
+        button.addEventListener('click', () => {
+          this._reasonSelected(option.value);
+        });
+        return button;
+      });
       form.appendChild(reasonLabel);
-      form.appendChild(reasonSelect);
-        
-      // **改行を追加**
+      reasonButtons.forEach(button => form.appendChild(button));
+
+      // 改行を追加
       const br = document.createElement('br');
       form.appendChild(br);
-        
+
       // フリーテキスト入力
       const commentLabel = document.createElement('label');
       commentLabel.textContent = '詳細なご意見をお聞かせください:';
@@ -165,16 +174,21 @@
       form.appendChild(commentInput);
 
       // Submit ボタンを作成
-      const button = document.createElement('button');
-      button.innerText = '送信';
-      button.addEventListener('click', () => {
-        this._onSubmitClick(reasonSelect.value, commentInput.value);
+      const submitButton = document.createElement('button');
+      submitButton.innerText = '送信';
+      submitButton.addEventListener('click', () => {
+        this._onSubmitClick(this.selectedReason, commentInput.value);
       });
 
       wrapper.appendChild(form);
-      wrapper.appendChild(button);
+      wrapper.appendChild(submitButton);
 
       this.renderRoot.appendChild(wrapper);
+    }
+
+    _reasonSelected(value) {
+      this.selectedReason = value;
+      // 選択されたボタンを強調表示するなどの処理を追加できます。
     }
 
     _onSubmitClick(reason, comment) {
@@ -194,6 +208,10 @@
 
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
 </script>
+</script>
+
+
+                <!-- Feedback -->
                 <!-- Clear Storage Button -->
 <button id="clear-storage-button">会話履歴を削除</button>
 
