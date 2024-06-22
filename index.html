@@ -132,7 +132,7 @@
 
                 
 <!--フィードバック回答スクリプト-->
-<script>
+<!-- script>
   class CustomFeedbackElement extends HTMLElement {
     constructor() {
       super();
@@ -247,8 +247,157 @@
   }
 
   customElements.define('df-external-custom-feedback', CustomFeedbackElement);
-</script>
+</script-->
 
+<script>
+  class CustomFeedbackElement extends HTMLElement {
+    constructor() {
+      super();
+      this.renderRoot = this.attachShadow({ mode: 'open' });
+      this.selectedReason = null;
+    }
+
+    connectedCallback() {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.flexDirection = 'column';
+      wrapper.style.gap = '1rem';
+      wrapper.style.padding = '1rem';
+      wrapper.style.border = '1px solid #ccc';
+      wrapper.style.borderRadius = '4px';
+
+      // 回答フォームを作成
+      const form = document.createElement('form');
+      form.style.display = 'flex';
+      form.style.flexDirection = 'column';
+      form.style.gap = '1rem';
+
+      // 低評価の理由選択
+      const reasonLabel = document.createElement('label');
+      reasonLabel.textContent = '低評価の理由を選択してください:';
+      const reasonSelect = document.createElement('select');
+      reasonSelect.style.padding = '0.8rem';
+      reasonSelect.style.border = '1px solid #ccc';
+      reasonSelect.style.borderRadius = '4px';
+      reasonSelect.style.backgroundColor = 'white';
+      reasonSelect.style.cursor = 'pointer';
+      const reasonOptions = [
+        { value: '内容がわかりにくい', label: '内容がわかりにくい' },
+        { value: '情報が古い', label: '情報が古い' },
+        { value: '誤った情報', label: '誤った情報' },
+        { value: 'その他', label: 'その他' }
+      ];
+      reasonOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+        reasonSelect.appendChild(optionElement);
+      });
+
+      reasonSelect.addEventListener('change', () => {
+        this._reasonSelected(reasonSelect.value);
+      });
+
+      form.appendChild(reasonLabel);
+      form.appendChild(reasonSelect);
+
+      // フリーテキスト入力
+      const commentLabel = document.createElement('label');
+      commentLabel.textContent = '詳細なご意見をお聞かせください:';
+      const commentInput = document.createElement('textarea');
+      commentInput.placeholder = 'ご意見を入力してください';
+      commentInput.style.padding = '0.8rem';
+      commentInput.style.border = '1px solid #ccc';
+      commentInput.style.borderRadius = '4px';
+      commentInput.style.resize = 'vertical';
+      form.appendChild(commentLabel);
+      form.appendChild(commentInput);
+
+      // Submit ボタンを作成
+      const submitButton = document.createElement('button');
+      submitButton.innerText = '送信';
+      submitButton.style.padding = '0.6rem 1rem';
+      submitButton.style.border = 'none';
+      submitButton.style.borderRadius = '4px';
+      submitButton.style.backgroundColor = '#007bff';
+      submitButton.style.color = 'white';
+      submitButton.style.cursor = 'pointer';
+      submitButton.addEventListener('click', () => {
+        this._onSubmitClick(this.selectedReason, commentInput.value);
+      });
+
+      const submitButtonContainer = document.createElement('div');
+      submitButtonContainer.style.display = 'flex';
+      submitButtonContainer.style.justifyContent = 'flex-start';
+      submitButtonContainer.appendChild(submitButton);
+
+      wrapper.appendChild(form);
+      wrapper.appendChild(submitButtonContainer);
+
+      this.renderRoot.appendChild(wrapper);
+
+      // イベントリスナーを追加
+      this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
+        const feedbackData = JSON.parse(event.detail);
+        // サーバーに送信する処理を追加
+        this._sendFeedbackToBigQuery(feedbackData);
+      });
+    }
+
+    _reasonSelected(value) {
+      this.selectedReason = value;
+    }
+
+    _onSubmitClick(reason, comment) {
+      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+        detail: JSON.stringify({
+          usefulness: 2,
+          accuracy: 3,
+          reason: reason,
+          comment: comment,
+        }),
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(event);
+    }
+
+    async _sendFeedbackToBigQuery(feedbackData) {
+      // BigQueryへの接続
+      const bigquery = require('@google-cloud/bigquery');
+      const client = new bigquery.BigQuery({
+        projectId: 'prj-basf-xarviobot-dev', // プロジェクト名を指定
+      });
+
+      // データを書き込むテーブル名
+      const tableName = 'conversation_history_copy';
+
+      // データを配列に変換
+      const rows = [
+        {
+          usefulness: feedbackData.usefulness,
+          accuracy: feedbackData.accuracy,
+          reason: feedbackData.reason,
+          comment: feedbackData.comment,
+        },
+      ];
+
+      // データをBigQueryに書き込む
+      await client
+        .dataset('xarvio_chat_bot_v2') // データセット名を指定
+        .table(tableName)
+        .insert(rows)
+        .then((results) => {
+          console.log('Feedback successfully written to BigQuery:', results);
+        })
+        .catch((err) => {
+          console.error('Error writing feedback to BigQuery:', err);
+        });
+    }
+  }
+
+  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
+</script>
 
                 <!-- Feedback -->
                 
