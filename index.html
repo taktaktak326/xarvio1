@@ -457,58 +457,7 @@
 
     customElements.define('df-external-custom-feedback', CustomFeedbackElement);
   </script>
-    _onSubmitClick(reason, comment) {
-      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
-        detail: JSON.stringify({
-          usefulness: 2,
-          accuracy: 3,
-          reason: reason,
-          comment: comment,
-        }),
-        bubbles: true,
-        composed: true,
-      });
-      this.dispatchEvent(event);
-    }
-
-    async _sendFeedbackToBigQuery(feedbackData) {
-      // BigQueryへの接続
-      const bigquery = require('@google-cloud/bigquery');
-      const client = new bigquery.BigQuery({
-        projectId: 'prj-basf-xarviobot-dev', // プロジェクト名を指定
-      });
-
-      // データを書き込むテーブル名
-      const tableName = 'conversation_history';
-
-      // データを配列に変換
-      const rows = [
-        {
-          usefulness: feedbackData.usefulness,
-          accuracy: feedbackData.accuracy,
-          reason: feedbackData.reason,
-          comment: feedbackData.comment,
-        },
-      ];
-
-      // データをBigQueryに書き込む
-      await client
-        .dataset('xarvio_chat_bot_v2') // データセット名を指定
-        .table(tableName)
-        .insert(rows)
-        .then((results) => {
-          console.log('Feedback successfully written to BigQuery:', results);
-        })
-        .catch((err) => {
-          console.error('Error writing feedback to BigQuery:', err);
-        });
-    }
-  }
-
-  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
-</script>
-
-
+  
                 <!-- Feedback -->
                 
                 <!-- Clear Storage Button -->
