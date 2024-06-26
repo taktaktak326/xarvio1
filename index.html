@@ -84,7 +84,6 @@
     <header class="c-header">
         <div class="c-header__inner">
             <a href="/" class="c-header__logo">
-                <img src="../img/common/logo.svg" alt="">
             </a>
         </div>
     </header>
@@ -219,7 +218,6 @@
 
       this.renderRoot.appendChild(wrapper);
 
-        
       // イベントリスナーを追加
       this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
         const feedbackData = JSON.parse(event.detail);
@@ -232,14 +230,18 @@
       this.selectedReason = value;
     }
 
- _onSubmitClick(reason, comment) {
-      const feedbackData = {
-        usefulness: 2,
-        accuracy: 3,
-        reason: reason,
-        comment: comment,
-      };
-      console.log('Feedback:', feedbackData); // Webhookで処理できるようにコンソールに記録
+    _onSubmitClick(reason, comment) {
+      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+        detail: JSON.stringify({
+          usefulness: 2,
+          accuracy: 3,
+          reason: reason,
+          comment: comment,
+        }),
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(event);
     }
   }
 
