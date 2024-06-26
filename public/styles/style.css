@@ -8096,7 +8096,7 @@ main {
 
 .section-page--beginner.beginner--styleTop {
     background-color: #f5f5f5;
-    background-image: url(../../img/common/backgroud-block.jpg);
+    background-image: url(img/backgroud-block.jpg);
     background-position: center top;
     background-repeat: no-repeat;
     background-image: url("../../../img/common/backgroud-block2.jpg");
@@ -9062,7 +9062,7 @@ main {
 .section-page--feature {
     padding: 75px 0 80px;
     background-color: #f5f5f5;
-    background-image: url(../../img/common/backgroud-block.jpg);
+    background-image: url(img/backgroud-block.jpg);
     background-position: center top;
     background-repeat: no-repeat
 }
@@ -9643,7 +9643,7 @@ main {
 .section-page--case {
     padding: 75px 0 80px;
     background-color: #f5f5f5;
-    background-image: url(../../img/common/backgroud-block.jpg);
+    background-image: url(img/backgroud-block.jpg);
     background-position: center top;
     background-repeat: no-repeat
 }
@@ -10142,7 +10142,7 @@ main {
 .section-page--price .column-top--price {
     padding: 80px 0 90px;
     background-color: #f5f5f5;
-    background-image: url(../../img/common/backgroud-block.jpg);
+    background-image: url(img/backgroud-block.jpg);
     background-position: center top;
     background-repeat: no-repeat
 }
@@ -10552,7 +10552,7 @@ main {
 .section-page--download {
     padding: 75px 0 20px;
     background-color: #f5f5f5;
-    background-image: url(../../img/common/backgroud-block.jpg);
+    background-image: url(img/backgroud-block.jpg);
     background-position: center top;
     background-repeat: no-repeat
 }
