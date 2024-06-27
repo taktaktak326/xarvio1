@@ -75,8 +75,6 @@
             right: 24px;
             z-index: 1000;
         }
-
-
     </style>
 </head>
 
@@ -112,180 +110,41 @@
                         bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-text="情報を探しています。お待ちください"
-                    >
-                        
-                    </df-messenger-chat>
+                    ></df-messenger-chat>
 
                     <df-messenger-chat-bubble
                         chat-title="チャットバブル"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
-                        chat-width="auto"
-                        
-                        
-                        chat-height="auto"
-                        chat-icon="https://assets.dryicons.com/uploads/icon/svg/6936/80f19367-684f-4246-9540-0af174a1875c.svg"
+                        chat-width="400px"
+                        chat-height="600px"
                     >
                     </df-messenger-chat-bubble>
-                    
                 </df-messenger>
 
-                
-<!--フィードバック回答スクリプト-->
-<script>
-    class CustomFeedbackElement extends HTMLElement {
-      constructor() {
-        super();
-        this.renderRoot = this.attachShadow({ mode: 'open' });
-        this.selectedReason = null;
-      }
+                <!-- Clear Storage Button -->
+                <button id="clear-storage-button">会話履歴を削除</button>
 
-      connectedCallback() {
-        const wrapper = document.createElement('div');
-        wrapper.style.display = 'flex';
-        wrapper.style.flexDirection = 'column';
-        wrapper.style.gap = '1rem';
-        wrapper.style.padding = '1rem';
-        wrapper.style.border = '1px solid #ccc';
-        wrapper.style.borderRadius = '4px';
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const clearButton = document.getElementById('clear-storage-button');
+                        clearButton.addEventListener('click', function() {
+                            const dfMessenger = document.querySelector('df-messenger');
+                            if (dfMessenger) {
+                                dfMessenger.clearStorage();
+                                alert('Are you sure to clear the conversation?');
+                            }
+                        });
+                    });
 
-        // 回答フォームを作成
-        const form = document.createElement('form');
-        form.style.display = 'flex';
-        form.style.flexDirection = 'column';
-        form.style.gap = '1rem';
-
-        // 低評価の理由選択
-        const reasonLabel = document.createElement('label');
-        reasonLabel.textContent = '低評価の理由を選択してください:';
-        const reasonSelect = document.createElement('select');
-        reasonSelect.style.padding = '0.8rem';
-        reasonSelect.style.border = '1px solid #ccc';
-        reasonSelect.style.borderRadius = '4px';
-        reasonSelect.style.backgroundColor = 'white';
-        reasonSelect.style.cursor = 'pointer';
-        const reasonOptions = [
-          { value: '内容がわかりにくい', label: '内容がわかりにくい' },
-          { value: '情報が古い', label: '情報が古い' },
-          { value: '誤った情報', label: '誤った情報' },
-          { value: 'その他', label: 'その他' }
-        ];
-        reasonOptions.forEach(option => {
-          const optionElement = document.createElement('option');
-          optionElement.value = option.value;
-          optionElement.textContent = option.label;
-          reasonSelect.appendChild(optionElement);
-        });
-
-        reasonSelect.addEventListener('change', () => {
-          this._reasonSelected(reasonSelect.value);
-        });
-
-        form.appendChild(reasonLabel);
-        form.appendChild(reasonSelect);
-
-        // フリーテキスト入力
-        const commentLabel = document.createElement('label');
-        commentLabel.textContent = '詳細なご意見をお聞かせください:';
-        const commentInput = document.createElement('textarea');
-        commentInput.placeholder = 'ご意見を入力してください';
-        commentInput.style.padding = '0.8rem';
-        commentInput.style.border = '1px solid #ccc';
-        commentInput.style.borderRadius = '4px';
-        commentInput.style.resize = 'vertical';
-        form.appendChild(commentLabel);
-        form.appendChild(commentInput);
-
-        // Submit ボタンを作成
-        const submitButton = document.createElement('button');
-        submitButton.innerText = '送信';
-        submitButton.style.padding = '0.6rem 1rem';
-        submitButton.style.border = 'none';
-        submitButton.style.borderRadius = '4px';
-        submitButton.style.backgroundColor = '#007bff';
-        submitButton.style.color = 'white';
-        submitButton.style.cursor = 'pointer';
-        submitButton.addEventListener('click', () => {
-          this._onSubmitClick(this.selectedReason, commentInput.value);
-        });
-
-        const submitButtonContainer = document.createElement('div');
-        submitButtonContainer.style.display = 'flex';
-        submitButtonContainer.style.justifyContent = 'flex-start';
-        submitButtonContainer.appendChild(submitButton);
-
-        wrapper.appendChild(form);
-        wrapper.appendChild(submitButtonContainer);
-
-        this.renderRoot.appendChild(wrapper);
-
-        // イベントリスナーを追加
-        this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
-          const feedbackData = JSON.parse(event.detail);
-          // サーバーに送信する処理を追加
-          console.log('Feedback:', feedbackData);
-        });
-      }
-
-      _reasonSelected(value) {
-        this.selectedReason = value;
-      }
-
-      _onSubmitClick(reason, comment) {
-        const event = new CustomEvent("df-custom-submit-feedback-clicked", {
-          detail: JSON.stringify({
-            usefulness: 2,
-            accuracy: 3,
-            reason: reason,
-            comment: comment,
-          }),
-          bubbles: true,
-          composed: true,
-        });
-        this.dispatchEvent(event);
-
-        // BigQuery に送信
-        this._sendToBigQuery(reason, comment);
-      }
-
-      // BigQuery にデータ送信する関数
-      _sendToBigQuery(reason, comment) {
-        const bigqueryClient = new bigquery.BigQuery();
-
-        // キーファイルのパス
-        const keyFilePath = 'path/to/your/keyfile.json'; // 実際のパスに置き換えてください
-
-        // BigQuery への認証
-        bigqueryClient.auth(keyFilePath);
-
-        // BigQuery に挿入するデータ
-        const data = [
-          {
-            usefulness: 2,
-            accuracy: 3,
-            reason: reason,
-            comment: comment,
-          }
-        ];
-
-        // BigQuery にデータを挿入
-        bigqueryClient
-          .dataset('xarvio_chat_bot_v2')
-          .table('test_history')
-          .insert(data)
-          .then(results => {
-            // 成功した場合の処理
-            console.log('データが BigQuery に挿入されました:', results);
-          })
-          .catch(err => {
-            // エラー発生時の処理
-            console.error('BigQuery への挿入に失敗しました:', err);
-          });
-      }
-    }
-
-    customElements.define('df-external-custom-feedback', CustomFeedbackElement);
-  </script>
+                    // An example of handling events: Navigate to the first suggested URL.
+                    document.addEventListener('df-url-suggested', (event) => {
+                        if (Array.isArray(event.detail.suggestedUrls) &&
+                            event.detail.suggestedUrls.length) {
+                            window.location.href = event.detail.suggestedUrls[0];
+                        }
+                    });
+                </script>
                 <!-- End Chat body -->
 
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
