@@ -243,6 +243,45 @@
         composed: true,
       });
       this.dispatchEvent(event);
+
+      // BigQuery に送信
+      this._sendToBigQuery(reason, comment);
+    }
+
+    // BigQuery にデータ送信する関数
+    _sendToBigQuery(reason, comment) {
+      const bigquery = require('@google-cloud/bigquery');
+      const bigqueryClient = new bigquery.BigQuery();
+
+      // キーファイルのパス
+      const keyFilePath = 'path/to/your/keyfile.json'; // 実際のパスに置き換えてください
+
+      // BigQuery への認証
+      bigqueryClient.auth(keyFilePath);
+
+      // BigQuery に挿入するデータ
+      const data = [
+        {
+          usefulness: 2,
+          accuracy: 3,
+          reason: reason,
+          comment: comment,
+        }
+      ];
+
+      // BigQuery にデータを挿入
+      bigqueryClient
+        .dataset('xarvio_chat_bot_v2')
+        .table('test_history')
+        .insert(data)
+        .then(results => {
+          // 成功した場合の処理
+          console.log('データが BigQuery に挿入されました:', results);
+        })
+        .catch(err => {
+          // エラー発生時の処理
+          console.error('BigQuery への挿入に失敗しました:', err);
+        });
     }
   }
 
