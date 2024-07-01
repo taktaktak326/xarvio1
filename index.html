@@ -120,10 +120,10 @@
                         chat-title="チャットバブル"
                         placeholder-text="メッセージを入力してください"
                         bot-writing-image="https://cdn.pixabay.com/animation/2023/11/09/03/05/03-05-45-320_512.gif"
-                        chat-width="auto"
+                        chat-width="480px"
                         
                         
-                        chat-height="auto"
+                        chat-height="720px"
                         chat-icon="https://assets.dryicons.com/uploads/icon/svg/6936/80f19367-684f-4246-9540-0af174a1875c.svg"
                     >
                     </df-messenger-chat-bubble>
@@ -271,7 +271,6 @@
 
                     // An example of handling events: Navigate to the first suggested URL.
                     document.addEventListener('df-url-suggested', (event) => {
-                        if (Array.isArray(event.detail.suggestedUrls) &&
                             event.detail.suggestedUrls.length) {
                             window.location.href = event.detail.suggestedUrls[0];
                         }
