@@ -138,7 +138,7 @@
     constructor() {
       super();
       this.renderRoot = this.attachShadow({ mode: 'open' });
-      this.selectedReason = '欲しい情報ではない'; 
+      this.selectedReason = 'irrelevant'; 
     }
 
     connectedCallback() {
@@ -158,7 +158,7 @@
 
       // 低評価の理由選択
       const reasonLabel = document.createElement('label');
-      reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください（任意）:';
+      reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください:';
       const reasonSelect = document.createElement('select');
       reasonSelect.style.padding = '0.8rem';
       reasonSelect.style.border = '1px solid #ccc';
@@ -166,8 +166,8 @@
       reasonSelect.style.backgroundColor = 'white';
       reasonSelect.style.cursor = 'pointer';
       const reasonOptions = [
-        { value: 'inappropriate', label: '欲しい情報ではない' },
-        { value: 'incorrect', label: '誤った情報' },
+        { value: 'irrelevant', label: '求めている回答ではない' },
+        { value: 'incorrect', label: '間違った情報' },
         { value: 'other', label: 'その他' },
       ];
       reasonOptions.forEach(option => {
@@ -190,9 +190,9 @@
 
       // フリーテキスト入力
       const commentLabel = document.createElement('label');
-      commentLabel.textContent = '詳細なご意見をお聞かせください:';
+      commentLabel.textContent = 'ご意見をお聞かせください（任意）:';
       const commentInput = document.createElement('textarea');
-      commentInput.placeholder = 'ご意見を入力してください（任意）';
+      commentInput.placeholder = 'フィードバックがありましたら、入力してください';
       commentInput.style.padding = '0.8rem';
       commentInput.style.border = '1px solid #ccc';
       commentInput.style.borderRadius = '4px';
@@ -232,15 +232,15 @@
     }
 
     _reasonSelected(value) {
-      this.selectedReason = value;  // selectedReasonにvalueを格納
+      this.selectedReason = value; 
     }
 
     _onSubmitClick(reason, comment) {
       const event = new CustomEvent("df-custom-submit-feedback-clicked", {
         detail: JSON.stringify({
-          usefulness: 2,
-          accuracy: 3,
-          reason: this.selectedReason, // selectedReasonにvalueが格納されていることを確認
+       //   usefulness: 2,
+       //   accuracy: 3,
+          reason: this.selectedReason, 
           comment: comment,
         }),
         bubbles: true,
