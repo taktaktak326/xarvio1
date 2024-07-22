@@ -133,6 +133,7 @@
                 
 <!--フィードバック回答スクリプト-->
 <script>
+
     class CustomFeedbackElement extends HTMLElement {
   constructor() {
     super();
@@ -179,9 +180,8 @@
 
     // reasonSelect の変更イベントリスナー
     reasonSelect.addEventListener('change', () => {
-      this._reasonSelected(reasonSelect.value);
-      // 送信処理を追加
-      this._onSubmitClick(this.selectedReason, commentInput.value);
+      // reasonSelect から値を取得して送信
+      this._onSubmitClick(reasonSelect.value, commentInput.value); 
     });
 
     form.appendChild(reasonLabel);
@@ -232,9 +232,10 @@
     });
   }
 
-  _reasonSelected(value) {
-    this.selectedReason = value;
-  }
+  // _reasonSelected は不要になりました
+  // _reasonSelected(value) {
+  //   this.selectedReason = value;
+  // }
 
   _onSubmitClick(reason, comment) {
     const event = new CustomEvent("df-custom-submit-feedback-clicked", {
