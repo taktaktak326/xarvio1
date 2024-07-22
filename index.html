@@ -185,8 +185,8 @@
       form.appendChild(reasonSelect);
 
       // フリーテキスト入力
-      //const commentLabel = document.createElement('label');
-      //commentLabel.textContent = '他にフィードバックがありましたら、入力してください:';
+      const commentLabel = document.createElement('label');
+      commentLabel.textContent = '他にフィードバックがありましたら、入力してください:';
       const commentInput = document.createElement('textarea');
       commentInput.placeholder = '他にフィードバックがありましたら、入力してください';
       commentInput.style.padding = '0.8rem';
@@ -234,8 +234,6 @@
     _onSubmitClick(reason, comment) {
       const event = new CustomEvent("df-custom-submit-feedback-clicked", {
         detail: JSON.stringify({
-          usefulness: 2,
-          accuracy: 3,
           reason: reason,
           comment: comment,
         }),
