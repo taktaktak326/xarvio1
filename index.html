@@ -262,25 +262,33 @@
                 <!-- Clear Storage Button -->
 <button id="clear-storage-button">会話履歴を削除</button>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const clearButton = document.getElementById('clear-storage-button');
-                        clearButton.addEventListener('click', function() {
-                            const dfMessenger = document.querySelector('df-messenger');
-                            if (dfMessenger) {
-                                dfMessenger.clearStorage();
-                                alert('会話の履歴を削除します');
-                            }
-                        });
-                    });
+document.addEventListener('DOMContentLoaded', () => {
+  const clearButton = document.getElementById('clear-storage-button');
 
-                    // An example of handling events: Navigate to the first suggested URL.
-                    document.addEventListener('df-url-suggested', (event) => {
-                            event.detail.suggestedUrls.length) {
-                            window.location.href = event.detail.suggestedUrls[0];
-                        }
-                    });
-                </script>
+  // 会話履歴のクリアボタンの処理
+  if (clearButton) {
+    clearButton.addEventListener('click', () => {
+      const dfMessenger = document.querySelector('df-messenger');
+      if (dfMessenger) {
+        dfMessenger.clearStorage();
+        alert('会話の履歴を削除します');
+      }
+    });
+  }
+
+  // URL候補の自動遷移処理
+  document.addEventListener('df-url-suggested', (event) => {
+    const suggestedUrls = event.detail.suggestedUrls;
+    if (suggestedUrls.length > 0) {
+      // 最初のURLに遷移
+      window.location.href = suggestedUrls[0];
+    } else {
+      // 提案されたURLがない場合は、エラー処理など
+      console.warn("提案されたURLが存在しません");
+    }
+  });
+});
+                
                 <!-- End Chat body -->
 
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
