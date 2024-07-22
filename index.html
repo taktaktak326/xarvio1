@@ -134,123 +134,148 @@
 <!--フィードバック回答スクリプト-->
 <script>
 
-  class CustomFeedbackElement extends HTMLElement {
-    constructor() {
-      super();
-      this.renderRoot = this.attachShadow({ mode: 'open' });
-      this.selectedReason = 'irrelevant'; 
-    }
-
-    connectedCallback() {
-      const wrapper = document.createElement('div');
-      wrapper.style.display = 'flex';
-      wrapper.style.flexDirection = 'column';
-      wrapper.style.gap = '1rem';
-      wrapper.style.padding = '1rem';
-      wrapper.style.border = '1px solid #ccc';
-      wrapper.style.borderRadius = '4px';
-
-      // 回答フォームを作成
-      const form = document.createElement('form');
-      form.style.display = 'flex';
-      form.style.flexDirection = 'column';
-      form.style.gap = '1rem';
-
-      // 低評価の理由選択
-      const reasonLabel = document.createElement('label');
-      reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください:';
-      const reasonSelect = document.createElement('select');
-      reasonSelect.style.padding = '0.8rem';
-      reasonSelect.style.border = '1px solid #ccc';
-      reasonSelect.style.borderRadius = '4px';
-      reasonSelect.style.backgroundColor = 'white';
-      reasonSelect.style.cursor = 'pointer';
-      const reasonOptions = [
-        { value: 'irrelevant', label: '求めている回答ではない' },
-        { value: 'incorrect', label: '間違った情報' },
-        { value: 'other', label: 'その他' },
-      ];
-      reasonOptions.forEach(option => {
-        const optionElement = document.createElement('option');
-        optionElement.value = option.value;
-        optionElement.textContent = option.label;
-
-        if (option.value === this.selectedReason) {
-          optionElement.selected = true;
-        }
-        reasonSelect.appendChild(optionElement);
-      });
-
-      reasonSelect.addEventListener('change', () => {
-        this._reasonSelected(reasonSelect.value);
-      });
-
-      form.appendChild(reasonLabel);
-      form.appendChild(reasonSelect);
-
-      // フリーテキスト入力
-      const commentLabel = document.createElement('label');
-      commentLabel.textContent = 'ご意見をお聞かせください（任意）:';
-      const commentInput = document.createElement('textarea');
-      commentInput.placeholder = 'フィードバックがありましたら、入力してください';
-      commentInput.style.padding = '0.8rem';
-      commentInput.style.border = '1px solid #ccc';
-      commentInput.style.borderRadius = '4px';
-      commentInput.style.resize = 'vertical';
-      form.appendChild(commentLabel);
-      form.appendChild(commentInput);
-
-      // Submit ボタンを作成
-      const submitButton = document.createElement('button');
-      submitButton.innerText = '送信';
-      submitButton.style.padding = '0.6rem 1rem';
-      submitButton.style.border = 'none';
-      submitButton.style.borderRadius = '4px';
-      submitButton.style.backgroundColor = '#007bff';
-      submitButton.style.color = 'white';
-      submitButton.style.cursor = 'pointer';
-      submitButton.addEventListener('click', () => {
-        this._onSubmitClick(this.selectedReason, commentInput.value);
-      });
-
-      const submitButtonContainer = document.createElement('div');
-      submitButtonContainer.style.display = 'flex';
-      submitButtonContainer.style.justifyContent = 'flex-start';
-      submitButtonContainer.appendChild(submitButton);
-
-      wrapper.appendChild(form);
-      wrapper.appendChild(submitButtonContainer);
-
-      this.renderRoot.appendChild(wrapper);
-
-      // イベントリスナーを追加
-      this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
-        const feedbackData = JSON.parse(event.detail);
-        // サーバーに送信する処理を追加
-        console.log('Feedback:', feedbackData);
-      });
-    }
-
-    _reasonSelected(value) {
-      this.selectedReason = value; 
-    }
-
-    _onSubmitClick(reason, comment) {
-      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
-        detail: JSON.stringify({
-       //   usefulness: 2,
-       //   accuracy: 3,
-          reason: this.selectedReason, 
-          comment: comment,
-        }),
-        bubbles: true,
-        composed: true,
-      });
-      this.dispatchEvent(event);
-    }
+class CustomFeedbackElement extends HTMLElement {
+  constructor() {
+    super();
+    this.renderRoot = this.attachShadow({ mode: 'open' });
+    this.selectedReason = 'irrelevant'; // デフォルトの理由は「irrelevant」
+    this.isPositiveFeedback = false; // 高評価かどうかを示すフラグ
   }
 
-  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
+  connectedCallback() {
+    const wrapper = document.createElement('div');
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'column';
+    wrapper.style.gap = '1rem';
+    wrapper.style.padding = '1rem';
+    wrapper.style.border = '1px solid #ccc';
+    wrapper.style.borderRadius = '4px';
+
+    // 回答フォームを作成
+    const form = document.createElement('form');
+    form.style.display = 'flex';
+    form.style.flexDirection = 'column';
+    form.style.gap = '1rem';
+    form.style.display = 'none'; // 最初はフォームを非表示にする
+
+    // 理由選択のラベル
+    const reasonLabel = document.createElement('label');
+    reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください:';
+    form.appendChild(reasonLabel);
+
+    // 理由選択 (Select要素)
+    const reasonSelect = document.createElement('select');
+    reasonSelect.style.padding = '0.8rem';
+    reasonSelect.style.border = '1px solid #ccc';
+    reasonSelect.style.borderRadius = '4px';
+    reasonSelect.style.backgroundColor = 'white';
+    reasonSelect.style.cursor = 'pointer';
+    form.appendChild(reasonSelect);
+
+    // フリーテキスト入力
+    const commentLabel = document.createElement('label');
+    commentLabel.textContent = 'ご意見をお聞かせください（任意）:';
+    form.appendChild(commentLabel);
+
+    const commentInput = document.createElement('textarea');
+    commentInput.placeholder = 'フィードバックがありましたら、入力してください';
+    commentInput.style.padding = '0.8rem';
+    commentInput.style.border = '1px solid #ccc';
+    commentInput.style.borderRadius = '4px';
+    commentInput.style.resize = 'vertical';
+    form.appendChild(commentInput);
+
+    // Submit ボタンを作成
+    const submitButton = document.createElement('button');
+    submitButton.innerText = '送信';
+    submitButton.style.padding = '0.6rem 1rem';
+    submitButton.style.border = 'none';
+    submitButton.style.borderRadius = '4px';
+    submitButton.style.backgroundColor = '#007bff';
+    submitButton.style.color = 'white';
+    submitButton.style.cursor = 'pointer';
+    submitButton.addEventListener('click', () => {
+      this._onSubmitClick(this.selectedReason, commentInput.value);
+    });
+
+    const submitButtonContainer = document.createElement('div');
+    submitButtonContainer.style.display = 'flex';
+    submitButtonContainer.style.justifyContent = 'flex-start';
+    submitButtonContainer.appendChild(submitButton);
+    form.appendChild(submitButtonContainer);
+
+    wrapper.appendChild(form);
+    this.renderRoot.appendChild(wrapper);
+
+    // イベントリスナーを追加
+    this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
+      const feedbackData = JSON.parse(event.detail);
+      // サーバーに送信する処理を追加
+      console.log('Feedback:', feedbackData);
+    });
+
+    // 親要素からボタン要素を取得
+    const parentNode = this.parentNode;
+    const thumbsUpButton = parentNode.querySelector('[aria-label="thumbs up"]');
+    const thumbsDownButton = parentNode.querySelector('[aria-label="thumbs down"]');
+
+    // 高評価ボタンのクリックイベント
+    thumbsUpButton.addEventListener('click', () => {
+      this.isPositiveFeedback = true;
+      this._showFeedbackForm();
+    });
+
+    // 低評価ボタンのクリックイベント
+    thumbsDownButton.addEventListener('click', () => {
+      this.isPositiveFeedback = false;
+      this._showFeedbackForm();
+    });
+  }
+
+  _showFeedbackForm() {
+    const form = this.renderRoot.querySelector('form');
+    const reasonSelect = this.renderRoot.querySelector('select');
+    reasonSelect.innerHTML = ''; // セレクトボックスの中身をクリア
+
+    // 高評価と低評価で選択肢を変更
+    const reasonOptions = this.isPositiveFeedback
+      ? [
+          { value: 'helpful', label: '役に立った' },
+          { value: 'informative', label: '情報が充実していた' },
+          { value: 'other', label: 'その他' },
+        ]
+      : [
+          { value: 'irrelevant', label: '求めている回答ではない' },
+          { value: 'incorrect', label: '間違った情報' },
+          { value: 'other', label: 'その他' },
+        ];
+
+    reasonOptions.forEach(option => {
+      const optionElement = document.createElement('option');
+      optionElement.value = option.value;
+      optionElement.textContent = option.label;
+      reasonSelect.appendChild(optionElement);
+    });
+
+    form.style.display = 'flex'; // フォームを表示
+  }
+
+  _onSubmitClick(reason, comment) {
+    const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+      detail: JSON.stringify({
+        // usefulness: 2, // 必要に応じて設定
+        // accuracy: 3,   // 必要に応じて設定
+        reason: reason,
+        comment: comment,
+      }),
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
+  }
+}
+
+customElements.define('df-external-custom-feedback', CustomFeedbackElement);
 </script>
 
                 
