@@ -138,6 +138,7 @@
   constructor() {
     super();
     this.renderRoot = this.attachShadow({ mode: 'open' });
+    this.selectedReason = '内容がわかりにくい'; // デフォルト値を設定
   }
 
   connectedCallback() {
