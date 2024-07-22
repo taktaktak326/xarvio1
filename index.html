@@ -138,7 +138,7 @@
   constructor() {
     super();
     this.renderRoot = this.attachShadow({ mode: 'open' });
-    this.selectedReason = '内容がわかりにくい'; // デフォルト値を設定
+    this.selectedReason = '欲しい情報ではない'; 
   }
 
   connectedCallback() {
@@ -158,7 +158,7 @@
 
     // 低評価の理由選択
     const reasonLabel = document.createElement('label');
-    reasonLabel.textContent = '低評価の理由を選択してください（任）:';
+    reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください（任意）:';
     const reasonSelect = document.createElement('select');
     reasonSelect.style.padding = '0.8rem';
     reasonSelect.style.border = '1px solid #ccc';
@@ -166,16 +166,15 @@
     reasonSelect.style.backgroundColor = 'white';
     reasonSelect.style.cursor = 'pointer';
     const reasonOptions = [
-      { value: '内容がわかりにくい', label: '内容がわかりにくい' },
-      { value: '情報が古い', label: '情報が古い' },
-      { value: '誤った情報', label: '誤った情報' },
-      { value: 'その他', label: 'その他' },
+      { value: 'inappropriate', label: '欲しい情報ではない' },
+      { value: 'incorrect', label: '誤った情報' },
+      { value: 'other', label: 'その他' },
     ];
     reasonOptions.forEach(option => {
       const optionElement = document.createElement('option');
       optionElement.value = option.value;
       optionElement.textContent = option.label;
-      // デフォルトで選択されている状態にする
+
       if (option.value === this.selectedReason) {
         optionElement.selected = true;
       }
@@ -193,7 +192,7 @@
     const commentLabel = document.createElement('label');
     commentLabel.textContent = '詳細なご意見をお聞かせください:';
     const commentInput = document.createElement('textarea');
-    commentInput.placeholder = 'ご意見を入力してください';
+    commentInput.placeholder = 'ご意見を入力してください（任意）';
     commentInput.style.padding = '0.8rem';
     commentInput.style.border = '1px solid #ccc';
     commentInput.style.borderRadius = '4px';
